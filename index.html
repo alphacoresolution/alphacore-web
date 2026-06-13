@@ -178,15 +178,16 @@ document.addEventListener('DOMContentLoaded', async function() {
 <script>
 (function() {
   function patchBtn() {
+    var found = false;
     var all = document.querySelectorAll('a, button');
     for (var i = 0; i < all.length; i++) {
       if (all[i].textContent.trim().includes('Empieza Gratis')) {
         all[i].textContent = 'Contact';
         all[i].href = '/contact';
-        return true;
+        found = true;
       }
     }
-    return false;
+    return found;
   }
   var tries = 0;
   var poll = setInterval(function() {
