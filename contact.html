@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — AlphaCore Solutions</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0F172A;
+      color: #CBD5E1;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(6,182,212,0.12);
+    }
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #06B6D4;
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .nav-logo span { color: #E2E8F0; }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 64px 24px 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(6,182,212,0.1);
+      border: 1px solid rgba(6,182,212,0.3);
+      color: #06B6D4;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: #F1F5F9;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: #06B6D4; }
+    .hero p {
+      font-size: 1.05rem;
+      color: #94A3B8;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* LAYOUT */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 40px;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      width: 100%;
+    }
+
+    /* INFO PANEL */
+    .info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .info-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 22px;
+    }
+    .info-card-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(6,182,212,0.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .info-card-icon svg {
+      width: 20px;
+      height: 20px;
+      color: #06B6D4;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .info-card h3 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #94A3B8;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .info-card p, .info-card a {
+      font-size: 0.95rem;
+      color: #E2E8F0;
+      text-decoration: none;
+    }
+    .info-card a:hover { color: #06B6D4; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .service-chip {
+      background: rgba(6,182,212,0.08);
+      border: 1px solid rgba(6,182,212,0.2);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      color: #CBD5E1;
+    }
+    .service-chip strong {
+      display: block;
+      color: #06B6D4;
+      font-size: 0.88rem;
+      margin-bottom: 2px;
+    }
+
+    /* FORM */
+    .form-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 36px;
+    }
+    .form-card h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #F1F5F9;
+      margin-bottom: 24px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #94A3B8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    input, textarea, select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      color: #E2E8F0;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    input::placeholder, textarea::placeholder { color: #475569; }
+    input:focus, textarea:focus, select:focus {
+      border-color: #06B6D4;
+      box-shadow: 0 0 0 3px rgba(6,182,212,0.12);
+    }
+    select option { background: #1E293B; color: #E2E8F0; }
+    textarea { resize: vertical; min-height: 110px; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #06B6D4, #0891B2);
+      color: #fff;
+      font-size: 0.98rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s, transform 0.15s;
+      margin-top: 6px;
+    }
+    .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .submit-btn:active { transform: translateY(0); }
+
+    /* SUCCESS */
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 32px 16px;
+    }
+    .success-msg .check {
+      width: 56px;
+      height: 56px;
+      background: rgba(6,182,212,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .success-msg .check svg {
+      width: 28px;
+      height: 28px;
+      stroke: #06B6D4;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .success-msg h3 { color: #F1F5F9; font-size: 1.3rem; margin-bottom: 8px; }
+    .success-msg p { color: #94A3B8; font-size: 0.95rem; }
+
+    /* FOOTER */
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.82rem;
+      color: #475569;
+    }
+    footer a { color: #06B6D4; text-decoration: none; }
+
+    @media (max-width: 680px) {
+      nav { padding: 16px 20px; }
+      .contact-wrapper { grid-template-columns: 1fr; padding: 0 16px 60px; }
+      .form-card { padding: 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero { padding: 48px 16px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Alpha<span>Core</span></a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">Get in Touch</div>
+    <h1>Let's build something<br><span>smart together</span></h1>
+    <p>Tell us about your business and we'll show you how AI can handle your calls and messages 24/7.</p>
+  </section>
+
+  <div class="contact-wrapper">
+
+    <!-- INFO PANEL -->
+    <div class="info-panel">
+
+      <div class="info-card">
+        <div class="info-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+        </div>
+        <h3>Phone</h3>
+        <a href="tel:+16123244413">612-324-4413</a>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h3>Email</h3>
+        <a href="mailto:info@alphacoresolutions.co">info@alphacoresolutions.co</a>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>Location</h3>
+        <p>Minneapolis, Minnesota, USA</p>
+      </div>
+
+      <div class="info-card">
+        <h3 style="margin-bottom:12px;">Our Services</h3>
+        <div class="services-grid">
+          <div class="service-chip"><strong>VoiceCore</strong>AI Phone Assistant</div>
+          <div class="service-chip"><strong>ChatCore</strong>AI Chat & SMS</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card">
+      <h2>Send us a message</h2>
+
+      <form id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="John Smith" required />
+          </div>
+          <div class="form-group">
+            <label for="business">Business Name</label>
+            <input type="text" id="business" name="business" placeholder="Your Business LLC" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="(612) 000-0000" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="service">Interested In</label>
+          <select id="service" name="service">
+            <option value="">Select a service...</option>
+            <option value="VoiceCore - AI Phone Assistant">VoiceCore — AI Phone Assistant</option>
+            <option value="ChatCore - AI SMS & WhatsApp">ChatCore — AI SMS & WhatsApp</option>
+            <option value="Both VoiceCore and ChatCore">Both Services</option>
+            <option value="General inquiry">General Inquiry</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us about your business and what you're looking for..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Send Message →</button>
+      </form>
+
+      <div class="success-msg" id="successMsg">
+        <div class="check">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>Message sent!</h3>
+        <p>We'll get back to you within 1 business day.<br>Check your inbox for a confirmation.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <a href="/">← Back to AlphaCore Solutions</a>
+    &nbsp;·&nbsp;
+    <a href="/privacy">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="/terms">Terms & Conditions</a>
+  </footer>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name     = document.getElementById('name').value;
+      const business = document.getElementById('business').value;
+      const email    = document.getElementById('email').value;
+      const phone    = document.getElementById('phone').value;
+      const service  = document.getElementById('service').value;
+      const message  = document.getElementById('message').value;
+
+      const subject = encodeURIComponent('New Contact Request — AlphaCore Solutions');
+      const body = encodeURIComponent(
+        'Name: ' + name + '\n' +
+        'Business: ' + (business || 'N/A') + '\n' +
+        'Email: ' + email + '\n' +
+        'Phone: ' + (phone || 'N/A') + '\n' +
+        'Service Interest: ' + (service || 'Not specified') + '\n\n' +
+        'Message:\n' + message
+      );
+
+      window.location.href = 'mailto:info@alphacoresolutions.co?subject=' + subject + '&body=' + body;
+
+      // Show success
+      setTimeout(function() {
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      }, 800);
+    });
+  </script>
+
+</body>
+</html>
