@@ -174,68 +174,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   </script>
 
 
-<!-- Nav Contact Button Injection -->
-<style>
-  .ac-nav-contact {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    background: linear-gradient(135deg, #06B6D4, #0891B2) !important;
-    color: #fff !important;
-    text-decoration: none !important;
-    font-weight: 700 !important;
-    font-size: 0.85rem !important;
-    padding: 9px 18px !important;
-    border-radius: 50px !important;
-    box-shadow: 0 2px 16px rgba(6,182,212,0.35) !important;
-    transition: opacity 0.2s, transform 0.15s !important;
-    white-space: nowrap !important;
-    cursor: pointer !important;
-    border: none !important;
-    margin-left: 8px !important;
-  }
-  .ac-nav-contact:hover { opacity: 0.88 !important; transform: translateY(-1px) !important; }
-</style>
-<script>
-(function() {
-  function inject() {
-    if (document.querySelector('.ac-nav-contact')) return true;
-
-    // Find the phone number element and replace it with Contact link
-    var allLinks = document.querySelectorAll('a, span, p, div');
-    var phoneEl = null;
-    for (var i = 0; i < allLinks.length; i++) {
-      if (allLinks[i].textContent.trim().replace(/\s/g,'').includes('6123244413') ||
-          allLinks[i].textContent.trim().includes('(612)')) {
-        phoneEl = allLinks[i];
-        break;
-      }
-    }
-
-    var anchor = document.createElement('a');
-    anchor.href = '/contact';
-    anchor.className = 'ac-nav-contact';
-    anchor.textContent = 'Contact';
-
-    if (phoneEl && phoneEl.parentNode) {
-      phoneEl.parentNode.replaceChild(anchor, phoneEl);
-      return true;
-    }
-
-    // Fallback: append to nav/header
-    var nav = document.querySelector('nav') || document.querySelector('header');
-    if (nav) { nav.appendChild(anchor); return true; }
-
-    return false;
-  }
-
-  var tries = 0;
-  var poll = setInterval(function() {
-    tries++;
-    if (inject() || tries > 60) clearInterval(poll);
-  }, 200);
-})();
-</script>
 
 </body>
 </html>
