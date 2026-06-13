@@ -25,10 +25,10 @@
       border-bottom: 1px solid rgba(6,182,212,0.12);
     }
     .nav-logo img {
-      height: 48px;
+      height: 52px;
       width: auto;
       display: block;
-      filter: brightness(1.1);
+      mix-blend-mode: screen;
     }
 
     /* HERO */
@@ -375,78 +375,6 @@
     &nbsp;·&nbsp;
     <a href="/terms">Terms & Conditions</a>
   </footer>
-
-  <!-- Floating Contact Button -->
-  <style>
-    .ac-fab {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      gap: 0;
-      background: linear-gradient(135deg, #06B6D4, #0891B2);
-      color: #fff;
-      border-radius: 50px;
-      box-shadow: 0 4px 24px rgba(6,182,212,0.45);
-      text-decoration: none;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      letter-spacing: 0.02em;
-      overflow: hidden;
-      transition: box-shadow 0.3s, transform 0.2s;
-      animation: ac-pulse 2.8s ease-in-out infinite;
-    }
-    .ac-fab:hover {
-      box-shadow: 0 6px 32px rgba(6,182,212,0.65);
-      transform: translateY(-2px);
-      animation: none;
-    }
-    .ac-fab-icon {
-      width: 52px;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .ac-fab-icon svg {
-      width: 22px;
-      height: 22px;
-      fill: none;
-      stroke: #fff;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .ac-fab-label {
-      max-width: 0;
-      overflow: hidden;
-      white-space: nowrap;
-      transition: max-width 0.35s cubic-bezier(0.4,0,0.2,1), padding 0.35s;
-      padding-right: 0;
-    }
-    .ac-fab:hover .ac-fab-label {
-      max-width: 120px;
-      padding-right: 18px;
-    }
-    @keyframes ac-pulse {
-      0%, 100% { box-shadow: 0 4px 24px rgba(6,182,212,0.45); }
-      50% { box-shadow: 0 4px 36px rgba(6,182,212,0.75); }
-    }
-  </style>
-  <a href="/contact" class="ac-fab" title="Contact AlphaCore Solutions">
-    <div class="ac-fab-icon">
-      <svg viewBox="0 0 24 24">
-        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-        <line x1="8" y1="10" x2="16" y2="10"/>
-        <line x1="8" y1="14" x2="13" y2="14"/>
-      </svg>
-    </div>
-    <span class="ac-fab-label">Contact Us</span>
-  </a>
 
   <script>
     document.getElementById('contactForm').addEventListener('submit', function(e) {
