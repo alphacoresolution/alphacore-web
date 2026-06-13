@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.querySelectorAll('a, button').forEach(function(el) {
       if (el.textContent.trim().includes('Empieza Gratis')) {
         el.textContent = 'Contact';
-        el.href = '/contact';
+        el.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); window.location.href = '/contact'; });
         found = true;
       }
     });
