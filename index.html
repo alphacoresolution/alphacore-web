@@ -177,22 +177,44 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 <script>
 (function() {
-  function patchBtn() {
+  var btnDone = false;
+  var bizDone = false;
+
+  function patchBtns() {
     var found = false;
-    var all = document.querySelectorAll('a, button');
-    for (var i = 0; i < all.length; i++) {
-      if (all[i].textContent.trim().includes('Empieza Gratis')) {
-        all[i].textContent = 'Contact';
-        all[i].href = '/contact';
+    document.querySelectorAll('a, button').forEach(function(el) {
+      if (el.textContent.trim().includes('Empieza Gratis')) {
+        el.textContent = 'Contact';
+        el.href = '/contact';
         found = true;
       }
-    }
+    });
     return found;
   }
+
+  function patchBusiness() {
+    var names = document.querySelectorAll('.price-name');
+    for (var i = 0; i < names.length; i++) {
+      if (names[i].textContent.trim() === 'Business') {
+        var card = names[i].closest ? names[i].closest('.price-card') : names[i].parentNode;
+        var amt = card.querySelector('.price-amount');
+        var strike = card.querySelector('.price-amount-strike');
+        if (amt) {
+          amt.innerHTML = '<span style="font-size:1.5rem;font-weight:700;color:#06B6D4;letter-spacing:-0.02em;">Contactar</span>';
+        }
+        if (strike) strike.style.display = 'none';
+        return true;
+      }
+    }
+    return false;
+  }
+
   var tries = 0;
   var poll = setInterval(function() {
     tries++;
-    if (patchBtn() || tries > 60) clearInterval(poll);
+    if (!btnDone) btnDone = patchBtns();
+    if (!bizDone) bizDone = patchBusiness();
+    if ((btnDone && bizDone) || tries > 60) clearInterval(poll);
   }, 200);
 })();
 </script>
