@@ -30,15 +30,30 @@
     if (document.getElementById('sms-consent-check')) return true;
     var form = document.querySelector('form');
     if (!form) return false;
-    var wrapper = document.createElement('div');
-    wrapper.style.cssText = 'padding:12px 0 8px 0;';
-    wrapper.innerHTML = '<div style="display:flex;align-items:flex-start;gap:8px;"><input type="checkbox" id="sms-consent-check" style="margin-top:3px;flex-shrink:0;width:16px;height:16px;cursor:pointer;" /><label for="sms-consent-check" style="font-size:0.78rem;color:#4a5568;line-height:1.5;cursor:pointer;">By submitting, I agree to receive automated SMS text messages from AlphaCore Solutions at the phone number provided. Msg &amp; data rates may apply. Frequency varies. Reply <strong>STOP</strong> to opt out or <strong>HELP</strong> for help. <a href="/privacy" style="color:#06B6D4;">Privacy Policy</a> · <a href="/terms" style="color:#06B6D4;">Terms</a>.</label></div>';
-    form.appendChild(wrapper);
+    var lastInput = form.querySelectorAll('input, textarea, select, button');
+    if (!lastInput.length) return false;
+    var consentHtml = '<div id="sms-consent-check-wrap" style="padding:10px 0 8px 0;display:flex;align-items:flex-start;gap:8px;"><input type="checkbox" id="sms-consent-check" style="margin-top:3px;flex-shrink:0;width:15px;height:15px;cursor:pointer;"/><label for="sms-consent-check" style="font-size:0.78rem;color:#64748b;line-height:1.5;cursor:pointer;">By submitting, I agree to receive automated SMS messages from AlphaCore Solutions at the number provided. Msg &amp; data rates may apply. Reply <strong>STOP</strong> to opt out or <strong>HELP</strong> for help. <a href="/privacy" style="color:#06B6D4;text-decoration:underline;">Privacy Policy</a> · <a href="/terms" style="color:#06B6D4;text-decoration:underline;">Terms</a>.</label></div>';
+    form.insertAdjacentHTML('beforeend', consentHtml);
     return true;
+  }
+
+  function watchForForm() {
+    if (window.location.pathname !== '/contact') return;
+    var observer = new MutationObserver(function() {
+      if (document.getElementById('sms-consent-check')) return;
+      var form = document.querySelector('form');
+      if (form && form.querySelectorAll('input, textarea').length >= 3) {
+        if (injectCheckbox()) observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    setTimeout(function() { observer.disconnect(); }, 10000);
   }
 
     injectSMSConsent();
 
+  injectSMSConsent();
+  watchForForm();
   var tries = 0;
   var done = { consent: false, checkbox: false };
   var poll = setInterval(function() {
@@ -55,6 +70,7 @@
       tries = 0;
       done = { consent: false, checkbox: false };
       injectSMSConsent();
+      watchForForm();
     }
   }, 500);
 })();
