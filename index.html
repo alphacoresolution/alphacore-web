@@ -28,23 +28,16 @@
   function injectCheckbox() {
     if (window.location.pathname !== '/contact') return false;
     if (document.getElementById('sms-consent-check')) return true;
-    var btn = null;
-    var allBtns = document.querySelectorAll('button[type=submit], button');
-    for (var i = 0; i < allBtns.length; i++) {
-      if (allBtns[i].textContent.toLowerCase().indexOf('send') >= 0 || allBtns[i].textContent.indexOf('→') >= 0) {
-        btn = allBtns[i];
-        break;
-      }
-    }
-    if (!btn) return false;
+    var form = document.querySelector('form');
+    if (!form) return false;
     var wrapper = document.createElement('div');
-    wrapper.style.cssText = 'display:flex;align-items:flex-start;gap:8px;margin-bottom:1rem;margin-top:0.5rem;';
-    wrapper.innerHTML = '<input type="checkbox" id="sms-consent-check" style="margin-top:3px;flex-shrink:0;width:16px;height:16px;cursor:pointer;" /><label for="sms-consent-check" style="font-size:0.8rem;color:#4a5568;line-height:1.4;cursor:pointer;">By submitting, I agree to receive automated SMS text messages from AlphaCore Solutions at the phone number provided. Msg &amp; data rates may apply. Message frequency varies. Reply <strong>STOP</strong> to opt out or <strong>HELP</strong> for help. See our <a href="/privacy" style="color:#06B6D4;">Privacy Policy</a> and <a href="/terms" style="color:#06B6D4;">Terms</a>.</label>';
-    btn.parentNode.insertBefore(wrapper, btn);
+    wrapper.style.cssText = 'padding:12px 0 8px 0;';
+    wrapper.innerHTML = '<div style="display:flex;align-items:flex-start;gap:8px;"><input type="checkbox" id="sms-consent-check" style="margin-top:3px;flex-shrink:0;width:16px;height:16px;cursor:pointer;" /><label for="sms-consent-check" style="font-size:0.78rem;color:#4a5568;line-height:1.5;cursor:pointer;">By submitting, I agree to receive automated SMS text messages from AlphaCore Solutions at the phone number provided. Msg &amp; data rates may apply. Frequency varies. Reply <strong>STOP</strong> to opt out or <strong>HELP</strong> for help. <a href="/privacy" style="color:#06B6D4;">Privacy Policy</a> · <a href="/terms" style="color:#06B6D4;">Terms</a>.</label></div>';
+    form.appendChild(wrapper);
     return true;
   }
 
-  injectSMSConsent();
+    injectSMSConsent();
 
   var tries = 0;
   var done = { consent: false, checkbox: false };
