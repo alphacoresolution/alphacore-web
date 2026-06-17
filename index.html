@@ -1,80 +1,5 @@
 ﻿<!DOCTY
-<script>
-(function() {
-  function injectSMSConsent() {
-    if (window.location.pathname === '/privacy') {
-      if (document.getElementById('sms-policy-section')) return true;
-      var main = document.querySelector('main') || document.querySelector('.content') || document.body;
-      var smsSection = document.createElement('div');
-      smsSection.id = 'sms-policy-section';
-      smsSection.style.cssText = 'max-width:800px;margin:2rem auto;padding:1.5rem 2rem;font-family:sans-serif;line-height:1.6;';
-      smsSection.innerHTML = '<h2 style="font-size:1.25rem;font-weight:600;margin-bottom:1rem;color:#1a202c;">SMS Messaging Policy</h2><p style="margin-bottom:0.75rem;">AlphaCore Solutions provides an AI-powered customer service platform (ChatCore) for small businesses. As part of this service, automated SMS messages may be sent to customers who have opted in.</p><p style="margin-bottom:0.75rem;"><strong>Opt-in:</strong> Customers consent to receive SMS by (1) texting +1 (612) 324-4413 directly, or (2) submitting their phone number via the contact form at alphacoresolutions.co/contact and checking the SMS consent box.</p><p style="margin-bottom:0.75rem;"><strong>Opt-out:</strong> Reply <strong>STOP</strong> to any message to unsubscribe immediately. A confirmation will be sent.</p><p style="margin-bottom:0.75rem;"><strong>Help:</strong> Reply <strong>HELP</strong> or contact info@alphacoresolutions.co or call (612) 324-4413.</p><p style="margin-bottom:0.75rem;"><strong>Message frequency:</strong> Varies based on service interactions.</p><p style="margin-bottom:0.75rem;"><strong>Message and data rates may apply.</strong></p><p>Phone numbers collected via SMS opt-in are not shared with third parties or used for marketing purposes.</p>';
-      main.appendChild(smsSection);
-      return true;
-    }
-    if (window.location.pathname === '/terms') {
-      if (document.getElementById('sms-terms-section')) return true;
-      var main2 = document.querySelector('main') || document.querySelector('.content') || document.body;
-      var termsSection = document.createElement('div');
-      termsSection.id = 'sms-terms-section';
-      termsSection.style.cssText = 'max-width:800px;margin:2rem auto;padding:1.5rem 2rem;font-family:sans-serif;line-height:1.6;';
-      termsSection.innerHTML = '<h2 style="font-size:1.25rem;font-weight:600;margin-bottom:1rem;color:#1a202c;">SMS Program Terms</h2><p style="margin-bottom:0.75rem;"><strong>Program name:</strong> AlphaCore Solutions SMS Notifications</p><p style="margin-bottom:0.75rem;"><strong>Description:</strong> Automated SMS messages sent on behalf of small businesses using the AlphaCore ChatCore platform. Messages include appointment confirmations, business hours, service follow-ups, and customer support replies.</p><p style="margin-bottom:0.75rem;"><strong>How to opt in:</strong> Text +1 (612) 324-4413 or submit your phone number via the contact form at alphacoresolutions.co/contact and check the SMS consent box.</p><p style="margin-bottom:0.75rem;"><strong>How to opt out:</strong> Reply <strong>STOP</strong> to any message at any time. You will receive a confirmation message.</p><p style="margin-bottom:0.75rem;"><strong>Help:</strong> Reply <strong>HELP</strong> or email info@alphacoresolutions.co or call (612) 324-4413.</p><p style="margin-bottom:0.75rem;"><strong>Message frequency:</strong> Varies based on your service interactions.</p><p><strong>Message and data rates may apply.</strong></p>';
-      main2.appendChild(termsSection);
-      return true;
-    }
-    return false;
-  }
-
-  function injectCheckbox() {
-    if (window.location.pathname !== '/contact') return false;
-    if (document.getElementById('sms-consent-check')) return true;
-    var form = document.querySelector('form');
-    if (!form) return false;
-    var lastInput = form.querySelectorAll('input, textarea, select, button');
-    if (!lastInput.length) return false;
-    var consentHtml = '<div id="sms-consent-check-wrap" style="padding:10px 0 8px 0;display:flex;align-items:flex-start;gap:8px;"><input type="checkbox" id="sms-consent-check" style="margin-top:3px;flex-shrink:0;width:15px;height:15px;cursor:pointer;"/><label for="sms-consent-check" style="font-size:0.78rem;color:#64748b;line-height:1.5;cursor:pointer;">By submitting, I agree to receive automated SMS messages from AlphaCore Solutions at the number provided. Msg &amp; data rates may apply. Reply <strong>STOP</strong> to opt out or <strong>HELP</strong> for help. <a href="/privacy" style="color:#06B6D4;text-decoration:underline;">Privacy Policy</a> · <a href="/terms" style="color:#06B6D4;text-decoration:underline;">Terms</a>.</label></div>';
-    form.insertAdjacentHTML('beforeend', consentHtml);
-    return true;
-  }
-
-  function watchForForm() {
-    if (window.location.pathname !== '/contact') return;
-    var observer = new MutationObserver(function() {
-      if (document.getElementById('sms-consent-check')) return;
-      var form = document.querySelector('form');
-      if (form && form.querySelectorAll('input, textarea').length >= 3) {
-        if (injectCheckbox()) observer.disconnect();
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-    setTimeout(function() { observer.disconnect(); }, 10000);
-  }
-
-    injectSMSConsent();
-
-  injectSMSConsent();
-  watchForForm();
-  var tries = 0;
-  var done = { consent: false, checkbox: false };
-  var poll = setInterval(function() {
-    tries++;
-    if (!done.consent) done.consent = injectSMSConsent();
-    if (!done.checkbox) done.checkbox = injectCheckbox();
-    if ((done.consent && done.checkbox) || tries > 60) clearInterval(poll);
-  }, 200);
-
-  var lastPath = window.location.pathname;
-  setInterval(function() {
-    if (window.location.pathname !== lastPath) {
-      lastPath = window.location.pathname;
-      tries = 0;
-      done = { consent: false, checkbox: false };
-      injectSMSConsent();
-      watchForForm();
-    }
-  }, 500);
-})();
-</script>PE html>
+PE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -292,6 +217,59 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (!bizDone) bizDone = patchBusiness();
     if ((btnDone && bizDone) || tries > 60) clearInterval(poll);
   }, 200);
+})();
+</script>
+<script>
+(function() {
+  function addSMSToPage() {
+    var path = window.location.pathname;
+
+    // /privacy - add SMS section
+    if (path === '/privacy' && !document.getElementById('sms-priv')) {
+      var d = document.createElement('div');
+      d.id = 'sms-priv';
+      d.style.cssText = 'max-width:760px;margin:2rem auto;padding:1rem 1.5rem;font-family:sans-serif;line-height:1.6;font-size:0.9rem;';
+      d.innerHTML = '<h2 style="font-size:1.1rem;font-weight:600;margin-bottom:0.75rem;">SMS Messaging Policy</h2><p style="margin:0 0 0.5rem;">AlphaCore Solutions sends automated SMS messages to customers who have opted in through our contact form at <a href="/contact" style="color:#06B6D4;">alphacoresolutions.co/contact</a> by checking the SMS consent box, or by texting +1 (612) 324-4413 directly.</p><p style="margin:0 0 0.5rem;"><b>Opt-out:</b> Reply STOP to any message. <b>Help:</b> Reply HELP or email info@alphacoresolutions.co. <b>Msg &amp; data rates may apply.</b> Frequency varies. Phone numbers are never shared with third parties.</p>';
+      document.body.appendChild(d);
+    }
+
+    // /terms - add SMS section
+    if (path === '/terms' && !document.getElementById('sms-terms')) {
+      var d2 = document.createElement('div');
+      d2.id = 'sms-terms';
+      d2.style.cssText = 'max-width:760px;margin:2rem auto;padding:1rem 1.5rem;font-family:sans-serif;line-height:1.6;font-size:0.9rem;';
+      d2.innerHTML = '<h2 style="font-size:1.1rem;font-weight:600;margin-bottom:0.75rem;">SMS Program Terms</h2><p style="margin:0 0 0.5rem;"><b>Program:</b> AlphaCore Solutions SMS Notifications. <b>Description:</b> Automated appointment confirmations, business hours, and service follow-ups.</p><p style="margin:0 0 0.5rem;"><b>Opt-in:</b> Submit phone number at <a href="/contact" style="color:#06B6D4;">alphacoresolutions.co/contact</a> and check the SMS consent box, or text +1 (612) 324-4413.</p><p style="margin:0;"><b>Opt-out:</b> Reply <b>STOP</b>. <b>Help:</b> Reply <b>HELP</b> or call (612) 324-4413. <b>Msg &amp; data rates may apply.</b></p>';
+      document.body.appendChild(d2);
+    }
+
+    // /contact - add checkbox to form
+    if (path === '/contact' && !document.getElementById('sms-cb')) {
+      var form = document.querySelector('form');
+      if (!form) return false;
+      var cb = document.createElement('div');
+      cb.id = 'sms-cb';
+      cb.style.cssText = 'display:flex;align-items:flex-start;gap:8px;padding:10px 0 6px;';
+      cb.innerHTML = '<input type="checkbox" id="sms-consent" style="margin-top:3px;flex-shrink:0;width:15px;height:15px;"/><label for="sms-consent" style="font-size:0.78rem;color:#64748b;line-height:1.5;">By submitting, I agree to receive automated SMS messages from AlphaCore Solutions at the number above. Msg &amp; data rates may apply. Reply <b>STOP</b> to opt out or <b>HELP</b> for help. <a href="/privacy" style="color:#06B6D4;">Privacy Policy</a> · <a href="/terms" style="color:#06B6D4;">Terms</a>.</label>';
+      form.appendChild(cb);
+      return true;
+    }
+    return false;
+  }
+
+  // Run on load and on every route change
+  window.addEventListener('load', function() {
+    addSMSToPage();
+    var observer = new MutationObserver(function() { addSMSToPage(); });
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+
+  // Also poll as fallback
+  var t = 0;
+  var iv = setInterval(function() {
+    t++;
+    addSMSToPage();
+    if (t > 30) clearInterval(iv);
+  }, 300);
 })();
 </script>
 </body>
