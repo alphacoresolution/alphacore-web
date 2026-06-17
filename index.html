@@ -219,45 +219,10 @@ document.addEventListener('DOMContentLoaded', async function() {
   }, 200);
 })();
 </script>
-<script>
-(function() {
-  var INJECTED = {};
 
-  function inject(id, html) {
-    if (INJECTED[id]) return true;
-    if (document.getElementById(id)) { INJECTED[id] = true; return true; }
-    var div = document.createElement('div');
-    div.id = id;
-    div.innerHTML = html;
-    document.body.appendChild(div);
-    INJECTED[id] = true;
-    return true;
-  }
 
-  function run() {
-    var path = window.location.pathname;
-
-    if (path === '/contact') {
-      inject('sms-notice', '<div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:14px 16px;margin:0 auto;max-width:640px;font-family:sans-serif;font-size:0.8rem;color:#0369a1;line-height:1.5;"><strong>SMS Consent:</strong> By submitting this form with your phone number, you agree to receive automated SMS messages from AlphaCore Solutions including appointment confirmations and service updates. Msg &amp; data rates may apply. Frequency varies. Reply <strong>STOP</strong> to opt out, <strong>HELP</strong> for help. <a href="/privacy" style="color:#06B6D4;">Privacy Policy</a> &middot; <a href="/terms" style="color:#06B6D4;">Terms</a>.</div>');
-    }
-
-    if (path === '/privacy') {
-      inject('sms-priv', '<div style="max-width:760px;margin:1.5rem auto;padding:1rem 1.5rem;font-family:sans-serif;font-size:0.88rem;line-height:1.7;border-top:1px solid #e2e8f0;"><h2 style="font-size:1rem;font-weight:600;margin:0 0 0.6rem;">SMS Messaging Policy</h2><p style="margin:0 0 0.5rem;">AlphaCore Solutions sends automated SMS messages to customers who opt in via the contact form at <a href="/contact" style="color:#06B6D4;">alphacoresolutions.co/contact</a> or by texting +1 (612) 324-4413 directly.</p><p style="margin:0;"><strong>Opt-out:</strong> Reply STOP. <strong>Help:</strong> Reply HELP or email info@alphacoresolutions.co. Msg &amp; data rates may apply. Phone numbers are never shared with third parties.</p></div>');
-    }
-
-    if (path === '/terms') {
-      inject('sms-terms', '<div style="max-width:760px;margin:1.5rem auto;padding:1rem 1.5rem;font-family:sans-serif;font-size:0.88rem;line-height:1.7;border-top:1px solid #e2e8f0;"><h2 style="font-size:1rem;font-weight:600;margin:0 0 0.6rem;">SMS Program Terms</h2><p style="margin:0 0 0.5rem;"><strong>Program:</strong> AlphaCore Solutions SMS Notifications. Automated appointment confirmations, business hours, and service follow-ups.</p><p style="margin:0 0 0.5rem;"><strong>Opt-in:</strong> Submit phone at <a href="/contact" style="color:#06B6D4;">alphacoresolutions.co/contact</a> or text +1 (612) 324-4413.</p><p style="margin:0;"><strong>Opt-out:</strong> Reply <strong>STOP</strong>. <strong>Help:</strong> Reply <strong>HELP</strong> or call (612) 324-4413. Msg &amp; data rates may apply.</p></div>');
-    }
-  }
-
-  var last = '';
-  setInterval(function() {
-    var cur = window.location.pathname;
-    if (cur !== last) { last = cur; INJECTED = {}; }
-    run();
-  }, 250);
-})();
-</script>
-
+<div id="alphacore-sms-footer" style="font-family:Arial,sans-serif;font-size:13px;color:#334155;background:#f0f9ff;border-top:2px solid #06B6D4;padding:16px 24px;line-height:1.6;">
+<strong>SMS Consent Notice:</strong> By submitting the contact form with your phone number, you consent to receive automated SMS text messages from AlphaCore Solutions, including appointment confirmations, business hours, and service updates. Message and data rates may apply. Message frequency varies. Reply <strong>STOP</strong> to opt out at any time. Reply <strong>HELP</strong> for assistance. Contact: info@alphacoresolutions.co | (612) 324-4413. View our <a href="/privacy" style="color:#06B6D4;">Privacy Policy</a> and <a href="/terms" style="color:#06B6D4;">Terms &amp; Conditions</a>.
+</div>
 </body>
 </html>
