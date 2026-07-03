@@ -1,4 +1,4 @@
-﻿<!DOCTY
+<!DOCTY
 PE html>
 <html>
 <head>
@@ -220,6 +220,62 @@ document.addEventListener('DOMContentLoaded', async function() {
 })();
 </script>
 
+
+<script>
+/* ---------- EchoCore section (injected — safe: only NEW nodes, never touches Svelte DOM) ---------- */
+(function() {
+  function buildEchoCore() {
+    if (document.getElementById('echocore-section')) return true;
+
+    var s = document.createElement('section');
+    s.id = 'echocore-section';
+    s.innerHTML =
+      '<div style="max-width:1100px;margin:0 auto;padding:72px 24px;font-family:inherit;">' +
+        '<div style="text-align:center;margin-bottom:12px;">' +
+          '<span style="display:inline-block;background:rgba(6,182,212,.12);color:#06B6D4;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:999px;">Nuevo — Para profesionales independientes</span>' +
+        '</div>' +
+        '<h2 style="text-align:center;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:8px 0 10px;color:#fff;">EchoCore — Tu Asistente Personal con IA</h2>' +
+        '<p style="text-align:center;color:#94a3b8;font-size:1.05rem;max-width:640px;margin:0 auto 40px;line-height:1.6;">Da el n&uacute;mero de tu asistente, no el tuyo. Contesta tus llamadas 24/7 en espa&ntilde;ol e ingl&eacute;s, filtra spam, agenda citas y te transfiere solo lo importante. Ideal para vendedores, contratistas y agentes.</p>' +
+        '<div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">' +
+          card('Voice', '$99', ['Asistente de voz 24/7', 'Filtro de spam y robocalls', 'Citas en tu Google Calendar', 'Aviso por SMS de cada llamada']) +
+          card('Voice + SMS', '$129', ['Todo lo de Voice', 'Controla por SMS: transferir, bloquear, modos', 'Resumen semanal de actividad', 'Reenv&iacute;o de textos de clientes'], true) +
+          card('Full', '$159', ['Todo lo de Voice + SMS', 'WhatsApp incluido', 'Prioridad de soporte', 'Configuraci&oacute;n personalizada']) +
+        '</div>' +
+        '<p style="text-align:center;color:#64748b;font-size:.85rem;margin-top:24px;">Setup &uacute;nico: $75 &nbsp;&middot;&nbsp; Sin contratos forzosos &nbsp;&middot;&nbsp; Tu n&uacute;mero personal queda protegido</p>' +
+        '<div style="text-align:center;margin-top:28px;">' +
+          '<a href="/contact" style="display:inline-block;background:#06B6D4;color:#0f172a;font-weight:800;font-size:1rem;padding:14px 36px;border-radius:10px;text-decoration:none;">Solicitar demo de EchoCore</a>' +
+        '</div>' +
+      '</div>';
+    s.style.background = '#0b1220';
+    s.style.borderTop = '1px solid rgba(6,182,212,.25)';
+    s.style.borderBottom = '1px solid rgba(6,182,212,.25)';
+
+    function card(name, price, feats, highlight) {
+      return '<div style="flex:1 1 260px;max-width:320px;background:#111c33;border:1px solid ' + (highlight ? '#06B6D4' : 'rgba(255,255,255,.08)') + ';border-radius:14px;padding:26px;position:relative;">' +
+        (highlight ? '<span style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#06B6D4;color:#0f172a;font-size:11px;font-weight:800;padding:3px 12px;border-radius:999px;">M&Aacute;S POPULAR</span>' : '') +
+        '<div style="font-size:14px;font-weight:700;color:#94a3b8;letter-spacing:1px;text-transform:uppercase;">' + name + '</div>' +
+        '<div style="font-size:2.2rem;font-weight:800;color:#fff;margin:8px 0 2px;">' + price + '<span style="font-size:1rem;color:#64748b;font-weight:500;">/mes</span></div>' +
+        '<ul style="list-style:none;padding:0;margin:16px 0 0;color:#cbd5e1;font-size:.9rem;line-height:2;">' +
+          feats.map(function(f){ return '<li>&#10003;&nbsp; ' + f + '</li>'; }).join('') +
+        '</ul></div>';
+    }
+
+    var footer = document.querySelector('footer');
+    if (footer && footer.parentNode) {
+      footer.parentNode.insertBefore(s, footer);
+    } else {
+      document.body.appendChild(s);
+    }
+    return true;
+  }
+
+  var ecTries = 0;
+  var ecPoll = setInterval(function() {
+    ecTries++;
+    if (buildEchoCore() || ecTries > 60) clearInterval(ecPoll);
+  }, 300);
+})();
+</script>
 
 <div id="alphacore-sms-footer" style="font-family:Arial,sans-serif;font-size:13px;color:#334155;background:#f0f9ff;border-top:2px solid #06B6D4;padding:16px 24px;line-height:1.6;">
 <strong>SMS Consent Notice:</strong> By submitting the contact form with your phone number, you consent to receive automated SMS text messages from AlphaCore Solutions, including appointment confirmations, business hours, and service updates. Message and data rates may apply. Message frequency varies. Reply <strong>STOP</strong> to opt out at any time. Reply <strong>HELP</strong> for assistance. Contact: info@alphacoresolutions.co | (612) 324-4413. View our <a href="/privacy" style="color:#06B6D4;">Privacy Policy</a> and <a href="/terms" style="color:#06B6D4;">Terms &amp; Conditions</a>.
