@@ -277,6 +277,40 @@ document.addEventListener('DOMContentLoaded', async function() {
 })();
 </script>
 
+<script>
+/* general-audience-patch: quitar nicho hispano, audiencia general (bilingue se queda) */
+(function() {
+  function patchTexts() {
+    var done = 0;
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      var c = meta.getAttribute('content') || '';
+      if (c.indexOf('hispanos') !== -1) {
+        meta.setAttribute('content', 'Automatizacion con IA para pequenos negocios en Minneapolis. Contesta llamadas, responde WhatsApp, agenda citas. 24/7, bilingue espanol e ingles, nunca duerme.');
+      }
+      if ((meta.getAttribute('content') || '').indexOf('hispanos') === -1) done++;
+    }
+    document.querySelectorAll('span').forEach(function(el) {
+      if (el.textContent.trim() === 'Soporte hispano') { el.textContent = 'Soporte bilingue'; }
+    });
+    var heroOk = true;
+    document.querySelectorAll('span').forEach(function(el) { if (el.textContent.trim() === 'Soporte hispano') heroOk = false; });
+    if (heroOk) done++;
+    document.querySelectorAll('p').forEach(function(el) {
+      if (el.textContent.indexOf('AI automation studio para negocios hispanos') !== -1) {
+        el.textContent = 'AI automation studio para pequenos negocios y profesionales independientes. Hecho en Minneapolis, MN, para el resto del pais.';
+      }
+    });
+    var footOk = true;
+    document.querySelectorAll('p').forEach(function(el) { if (el.textContent.indexOf('negocios hispanos') !== -1) footOk = false; });
+    if (footOk) done++;
+    return done >= 3;
+  }
+  var t = 0;
+  var pv = setInterval(function() { t++; if (patchTexts() || t > 60) clearInterval(pv); }, 250);
+})();
+</script>
+
 <div id="alphacore-sms-footer" style="font-family:Arial,sans-serif;font-size:13px;color:#334155;background:#f0f9ff;border-top:2px solid #06B6D4;padding:16px 24px;line-height:1.6;">
 <strong>SMS Consent Notice:</strong> By submitting the contact form with your phone number, you consent to receive automated transactional SMS text messages from AlphaCore Solutions, such as appointment confirmations, appointment reminders, and call notifications. AlphaCore Solutions does not send marketing or promotional SMS. Message and data rates may apply. Message frequency varies. Reply <strong>STOP</strong> to opt out at any time. Reply <strong>HELP</strong> for assistance. Contact: info@alphacoresolutions.co | (612) 324-4413. View our <a href="/privacy" style="color:#06B6D4;">Privacy Policy</a> and <a href="/terms" style="color:#06B6D4;">Terms &amp; Conditions</a>.
 </div>
