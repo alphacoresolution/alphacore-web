@@ -312,22 +312,47 @@ document.addEventListener('DOMContentLoaded', async function() {
 </script>
 
 <script>
-/* Boton flotante "Acceso Clientes" — inyeccion, no toca el bundle Svelte */
+/* Boton "Acceso Clientes" integrado al menu — reemplaza el pill flotante que
+   se encimaba con el boton "Contact" del navbar. Se inserta como un item mas
+   de .nav-cta (desktop) y otro dentro del menu movil #navLinks (hamburguesa),
+   nunca se toca ni reemplaza ningun nodo existente del bundle Svelte. */
 (function(){
-  if (document.getElementById('acceso-clientes-patch')) return;
+  if (document.getElementById('acceso-clientes-nav')) return;
+  if (!document.getElementById('acceso-clientes-style')) {
+    var st = document.createElement('style');
+    st.id = 'acceso-clientes-style';
+    st.textContent = '@media (max-width: 760px){ #acceso-clientes-nav{ display:none !important; } }';
+    document.head.appendChild(st);
+  }
   function add(){
-    if (document.getElementById('acceso-clientes-patch')) return true;
-    var a = document.createElement('a');
-    a.id = 'acceso-clientes-patch';
-    a.href = 'https://echocore-production-8c53.up.railway.app/portal/login';
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.textContent = 'Acceso Clientes';
-    a.style.cssText = 'position:fixed;top:14px;right:16px;z-index:99999;background:#06B6D4;color:#0b1220;font-family:Arial,sans-serif;font-weight:700;font-size:13px;text-decoration:none;padding:9px 18px;border-radius:999px;box-shadow:0 4px 14px rgba(6,182,212,.4)';
-    document.body.appendChild(a);
+    var navCta = document.querySelector('.nav-cta');
+    var hamburger = document.getElementById('hamburger');
+    var navLinks = document.getElementById('navLinks');
+    if (!navCta || !hamburger || !navLinks) return false;
+
+    if (!document.getElementById('acceso-clientes-nav')) {
+      var a = document.createElement('a');
+      a.id = 'acceso-clientes-nav';
+      a.href = 'https://echocore-production-8c53.up.railway.app/portal/login';
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = 'Acceso Clientes';
+      a.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;background:#06B6D4;color:#0b1220;font-family:Arial,sans-serif;font-weight:700;font-size:13px;text-decoration:none;padding:9px 16px;border-radius:999px;white-space:nowrap;';
+      navCta.insertBefore(a, hamburger);
+    }
+    if (!document.getElementById('acceso-clientes-mobile')) {
+      var m = document.createElement('a');
+      m.id = 'acceso-clientes-mobile';
+      m.href = 'https://echocore-production-8c53.up.railway.app/portal/login';
+      m.target = '_blank';
+      m.rel = 'noopener';
+      m.textContent = 'Acceso Clientes';
+      m.style.cssText = 'color:#06B6D4;font-weight:700;';
+      navLinks.appendChild(m);
+    }
     return true;
   }
-  var t=0, p=setInterval(function(){ t++; if(add()||t>40) clearInterval(p); }, 250);
+  var t = 0, p = setInterval(function(){ t++; if (add() || t > 60) clearInterval(p); }, 250);
 })();
 </script>
 <div id="alphacore-sms-footer" style="font-family:Arial,sans-serif;font-size:13px;color:#334155;background:#f0f9ff;border-top:2px solid #06B6D4;padding:16px 24px;line-height:1.6;">
