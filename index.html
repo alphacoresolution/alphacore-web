@@ -355,6 +355,59 @@ document.addEventListener('DOMContentLoaded', async function() {
   var t = 0, p = setInterval(function(){ t++; if (add() || t > 60) clearInterval(p); }, 250);
 })();
 </script>
+<script>
+/* Integrar EchoCore como tercer producto en la seccion #productos real (antes
+   solo vivia en un bloque aparte, muy abajo, casi junto al footer). Solo se
+   editan textos de titulo/parrafo (textContent, patron ya usado en el sitio)
+   y se agrega una tarjeta NUEVA al final de .products-grid (appendChild) —
+   nunca se toca, reemplaza ni remueve ningun nodo existente del bundle Svelte.
+   La animacion de VoiceCore usa un id unico (#voiceViz) que no se puede
+   duplicar con seguridad, asi que la tarjeta de EchoCore usa su propio
+   visual (burbuja de SMS, mismas clases que ya usa ChatCore: chat-viz/bubble). */
+(function(){
+  if (document.getElementById('echocore-product-card')) return;
+  function add(){
+    var grid = document.querySelector('#productos .products-grid');
+    var head = document.querySelector('#productos .section-head');
+    if (!grid || !head) return false;
+
+    var h2 = head.querySelector('h2');
+    var p = head.querySelector('p');
+    if (h2 && h2.textContent.indexOf('Dos motores') !== -1) {
+      h2.textContent = 'Tres motores. Un negocio que nunca duerme.';
+    }
+    if (p && p.textContent.indexOf('EchoCore') === -1) {
+      p.textContent = 'VoiceCore contesta el teléfono. ChatCore responde WhatsApp. EchoCore protege tu número personal. Trabajan juntos, hablan dos idiomas, agendan citas directamente en tu calendario.';
+    }
+
+    if (!document.getElementById('echocore-product-card')) {
+      var art = document.createElement('article');
+      art.id = 'echocore-product-card';
+      art.className = 'product-card mouse-glow reveal delay-2';
+      art.style.cssText = 'grid-column:1/-1;max-width:580px;margin:0 auto;';
+      art.innerHTML =
+        '<span class="product-tag">Producto 03 — Asistente Personal</span>' +
+        '<h3 class="product-name">Echo<span class="ac">Core</span></h3>' +
+        '<p class="product-tag-line">Tu asistente personal con IA. Da el número de tu asistente, no el tuyo — filtra spam, agenda tus citas y avisa a tu celular en cada llamada.</p>' +
+        '<ul class="product-features">' +
+          '<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Protege tu número personal</li>' +
+          '<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Filtra spam y robocalls automáticamente</li>' +
+          '<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Tus contactos VIP pasan directo, sin filtro</li>' +
+          '<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Te avisa por SMS en cada llamada, con opción de transferir al instante</li>' +
+          '<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Modo Asistente Personal: agenda citas y recordatorios con tu propia voz</li>' +
+        '</ul>' +
+        '<div class="product-viz">' +
+          '<div class="chat-viz">' +
+            '<div class="bubble in">📞 EchoCore — Juan Pérez (612-555-0134)<br>Motivo: presupuesto de cocina<br>Responde: 1 Transferir · 2 Detalles · 3 Bloquear</div>' +
+          '</div>' +
+        '</div>';
+      grid.appendChild(art);
+    }
+    return true;
+  }
+  var t = 0, p2 = setInterval(function(){ t++; if (add() || t > 60) clearInterval(p2); }, 250);
+})();
+</script>
 <div id="alphacore-sms-footer" style="font-family:Arial,sans-serif;font-size:13px;color:#334155;background:#f0f9ff;border-top:2px solid #06B6D4;padding:16px 24px;line-height:1.6;">
 <strong>SMS Consent Notice:</strong> By submitting the contact form with your phone number, you consent to receive automated transactional SMS text messages from AlphaCore Solutions, such as appointment confirmations, appointment reminders, and call notifications. AlphaCore Solutions does not send marketing or promotional SMS. Message and data rates may apply. Message frequency varies. Reply <strong>STOP</strong> to opt out at any time. Reply <strong>HELP</strong> for assistance. Contact: info@alphacoresolutions.co | (612) 324-4413. View our <a href="/privacy" style="color:#06B6D4;">Privacy Policy</a> and <a href="/terms" style="color:#06B6D4;">Terms &amp; Conditions</a>.
 </div>
