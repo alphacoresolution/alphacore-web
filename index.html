@@ -237,6 +237,13 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 .foot-bot{border-top:1px solid rgba(255,255,255,.06);margin-top:40px;padding-top:22px;display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:space-between;align-items:center;font-size:13px;color:var(--text5)}
 .foot-bot a{color:var(--text4)}
 
+/* ── SPLASH INTRO ── */
+.splash{position:fixed;inset:0;background:var(--bg);z-index:10000;display:flex;align-items:center;justify-content:center;transition:opacity .7s ease,visibility .7s ease}
+.splash img{width:min(220px,45vw);height:auto;animation:splash-pulse 1.4s ease-in-out infinite}
+.splash.gone{opacity:0;visibility:hidden;pointer-events:none}
+@keyframes splash-pulse{0%,100%{transform:scale(.96);opacity:.75}50%{transform:scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.splash img{animation:none}}
+
 /* ── CURSOR ── */
 .cur-glow{position:fixed;left:0;top:0;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(6,182,212,.13),transparent 62%);pointer-events:none;z-index:9998;opacity:0;will-change:transform}
 .cur-ring{position:fixed;left:0;top:0;width:20px;height:20px;border:1.5px solid var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference;opacity:0;will-change:transform;transition:width .18s,height .18s,opacity .25s}
@@ -272,6 +279,9 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 </style>
 </head>
 <body>
+
+<!-- Splash intro -->
+<div id="splash" class="splash"><img src="logo.png" alt="AlphaCore Solutions"></div>
 
 <!-- Custom cursor (desktop only) -->
 <div id="curGlow" class="cur-glow" aria-hidden="true"></div>
@@ -680,6 +690,12 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
    ═══════════════════════════════════════════════════ */
 (function(){
 'use strict';
+
+/* ── Splash intro: fade out después de load o 1.4s (lo que llegue primero) ── */
+var splashEl = document.getElementById('splash');
+function hideSplash(){ if(splashEl) splashEl.classList.add('gone'); }
+window.addEventListener('load', function(){ setTimeout(hideSplash, 900); });
+setTimeout(hideSplash, 2500);
 
 /* ── i18n ── */
 var LANG = 'en';
