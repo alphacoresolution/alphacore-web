@@ -77,6 +77,8 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 .fc-echo{top:0;left:0;width:70%;z-index:3;border-color:rgba(34,211,238,.32);animation:lev 8s ease-in-out .4s infinite}
 .fc-voice{top:118px;right:0;width:62%;z-index:2;animation:lev 7s ease-in-out infinite}
 .fc-chat{bottom:0;left:8%;width:64%;z-index:1;animation:lev 9s ease-in-out .8s infinite}
+.fcard{transition:scale .35s cubic-bezier(.2,.7,.3,1),box-shadow .35s ease}
+.fcard:hover{scale:1.05;z-index:100!important;box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 1px rgba(34,211,238,.35)}
 .frow{display:flex;align-items:center;gap:9px}
 .ficon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ficon-c{background:rgba(34,211,238,.13)}.ficon-r{background:rgba(239,68,68,.13)}
@@ -121,32 +123,35 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 
 /* ── SERVICES ── */
 .sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.svc-icon{width:52px;height:52px;border-radius:14px;background:rgba(6,182,212,.12);border:1px solid rgba(34,211,238,.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.sgrid .card{text-align:center}
+.svc-icon{width:52px;height:52px;border-radius:14px;background:rgba(6,182,212,.12);border:1px solid rgba(34,211,238,.18);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
 .svc-t{font-weight:700;font-size:20px;letter-spacing:-.4px;margin-bottom:10px}
 .svc-d{font-size:14px;color:var(--text3);line-height:1.62;margin-bottom:18px}
-.ttags{display:flex;flex-wrap:wrap;gap:8px}
+.ttags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .ttag{font-size:11px;color:var(--text4);border:1px solid rgba(255,255,255,.1);padding:5px 11px;border-radius:8px;font-family:ui-monospace,monospace}
 
 /* ── STEPS ── */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.steps .card{text-align:center}
 .step-n{font-weight:700;font-size:42px;letter-spacing:-2px;color:rgba(34,211,238,.28);line-height:1;margin-bottom:14px}
 .step-t{font-weight:700;font-size:20px;letter-spacing:-.4px;margin-bottom:10px}
 .step-d{font-size:14px;color:var(--text3);line-height:1.62;margin-bottom:18px}
-.step-b{font-size:11px;color:#67E8F9;background:rgba(6,182,212,.09);border:1px solid rgba(34,211,238,.16);padding:5px 11px;border-radius:20px}
+.step-b{display:inline-block;font-size:11px;color:#67E8F9;background:rgba(6,182,212,.09);border:1px solid rgba(34,211,238,.16);padding:5px 11px;border-radius:20px}
 
 /* ── PRICING ── */
 .ptoggle{display:flex;width:max-content;margin-inline:auto;align-items:center;gap:4px;background:rgba(10,18,32,.6);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:4px;margin-bottom:44px}
 .ptoggle button{background:none;color:var(--text3);font-weight:600;font-size:14px;padding:9px 18px;border:none;border-radius:9px;cursor:pointer;font-family:inherit;transition:background .2s,color .2s}
 .ptoggle button.active{background:var(--cyan5);color:var(--bg);font-weight:700}
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
-.pcard{padding:30px}
+.pcard{padding:30px;text-align:center}
+.pcard>div:first-of-type{justify-content:center!important}
 .pcard-feat{background:linear-gradient(165deg,rgba(13,26,38,.7),rgba(8,19,32,.7));border-color:rgba(34,211,238,.4);box-shadow:0 20px 60px rgba(6,182,212,.13)}
 .plabel{font-size:11px;letter-spacing:2.2px;color:var(--text4);text-transform:uppercase;margin-bottom:14px}
 .plabel-c{color:#67E8F9}
 .pprice{font-weight:700;font-size:38px;letter-spacing:-1.6px}
 .pper{font-size:14px;color:var(--text4)}
 .pdsc{font-size:14px;color:var(--text3);line-height:1.6;margin:8px 0 24px;min-height:44px}
-.pfeats{margin-bottom:26px;display:flex;flex-direction:column;gap:11px}
+.pfeats{margin-bottom:26px;display:flex;flex-direction:column;gap:11px;text-align:left;max-width:280px;margin-inline:auto}
 .pfeats li{font-size:14px;color:#dbe4f0;display:flex;gap:9px}
 .pcheck{color:var(--cyan);flex-shrink:0}
 .rec-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--cyan);color:var(--bg);font-size:10px;font-weight:800;letter-spacing:1px;padding:5px 14px;border-radius:20px}
