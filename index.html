@@ -763,13 +763,17 @@ var DICT = {
 var DICT_REV = {};
 Object.keys(DICT).forEach(function(k){ DICT_REV[DICT[k]] = k; });
 
-function tr(key){ return LANG === 'es' ? (DICT[key] || key) : key; }
+var ORIG = new WeakMap();
 function applyI18n(){
   document.querySelectorAll('[data-i18n]').forEach(function(el){
+    if(!ORIG.has(el)) ORIG.set(el, el.textContent);
     var key = el.getAttribute('data-i18n');
-    el.textContent = tr(key);
+    if(LANG === 'es'){ el.textContent = DICT[key] || ORIG.get(el); }
+    else { el.textContent = ORIG.get(el); }
   });
-  document.getElementById('recBadge').textContent = tr('RECOMMENDED');
+  var rec = document.getElementById('recBadge');
+  if(!ORIG.has(rec)) ORIG.set(rec, rec.textContent);
+  rec.textContent = LANG === 'es' ? (DICT['RECOMMENDED'] || ORIG.get(rec)) : ORIG.get(rec);
   document.getElementById('langLabel').textContent = LANG === 'es' ? 'EN' : 'ES';
   var mobLang = document.getElementById('mobLang');
   if(mobLang) mobLang.textContent = LANG === 'es' ? 'EN' : 'ES';
