@@ -317,6 +317,11 @@
       <h2>Send us a message</h2>
 
       <form id="contactForm">
+        <!-- Trampa anti-bot: invisible para personas, los bots la llenan.
+             El servidor descarta el envío si viene con algo. -->
+        <div style="position:absolute;left:-9999px" aria-hidden="true">
+          <label>Do not fill<input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
         <div class="form-row">
           <div class="form-group">
             <label for="name">Your Name</label>
@@ -397,25 +402,56 @@
       const message  = document.getElementById('message').value;
       const smsOk    = document.getElementById('smsConsent').checked;
 
-      const subject = encodeURIComponent('New Contact Request — AlphaCore Solutions');
-      const body = encodeURIComponent(
-        'Name: ' + name + '\n' +
-        'Business: ' + (business || 'N/A') + '\n' +
-        'Email: ' + email + '\n' +
-        'Phone: ' + (phone || 'N/A') + '\n' +
-        'Service Interest: ' + (service || 'Not specified') + '\n' +
-        // Registro de consentimiento SMS (evidencia de opt-in con fecha)
-        'SMS Consent: ' + (smsOk ? 'YES' : 'NO') + ' — ' + new Date().toISOString() + '\n\n' +
-        'Message:\n' + message
-      );
+      const honey    = (document.getElementById('website') || {}).value || '';
 
-      window.location.href = 'mailto:info@alphacoresolutions.co?subject=' + subject + '&body=' + body;
-
-      // Show success
-      setTimeout(function() {
+      function showSuccess() {
         document.getElementById('contactForm').style.display = 'none';
         document.getElementById('successMsg').style.display = 'block';
-      }, 800);
+      }
+
+      // Si el servidor no puede (o no está configurado), se usa el mailto: de
+      // siempre — el formulario nunca queda peor que antes de este cambio.
+      function fallbackMailto() {
+        const subject = encodeURIComponent('New Contact Request — AlphaCore Solutions');
+        const body = encodeURIComponent(
+          'Name: ' + name + '\n' +
+          'Business: ' + (business || 'N/A') + '\n' +
+          'Email: ' + email + '\n' +
+          'Phone: ' + (phone || 'N/A') + '\n' +
+          'Service Interest: ' + (service || 'Not specified') + '\n' +
+          // Registro de consentimiento SMS (evidencia de opt-in con fecha)
+          'SMS Consent: ' + (smsOk ? 'YES' : 'NO') + ' — ' + new Date().toISOString() + '\n\n' +
+          'Message:\n' + message
+        );
+        window.location.href = 'mailto:info@alphacoresolutions.co?subject=' + subject + '&body=' + body;
+        setTimeout(showSuccess, 800);
+      }
+
+      const btn = e.target.querySelector('button[type="submit"]');
+      const btnText = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name,
+          contact: email || phone,
+          business: business,
+          message: 'Service interest: ' + (service || 'Not specified') +
+                   (phone ? '\nPhone: ' + phone : '') +
+                   '\n\n' + message,
+          smsConsent: smsOk,
+          honey: honey
+        })
+      })
+      .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function(data) {
+        if (!data || !data.ok) return Promise.reject('no-ok');
+        showSuccess();
+      })
+      .catch(function() { fallbackMailto(); })
+      .finally(function() { if (btn) { btn.disabled = false; btn.textContent = btnText; } });
     });
   </script>
 

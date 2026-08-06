@@ -1095,7 +1095,7 @@ if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-moti
   document.querySelectorAll('[data-count]').forEach(function(el){ counterIO.observe(el); });
 }
 
-/* ── Form validation + mailto ── */
+/* ── Form: validación + envío al servidor (con mailto de respaldo) ── */
 document.getElementById('form').addEventListener('submit', function(e){
   e.preventDefault();
   var name = document.getElementById('fName').value.trim();
@@ -1114,23 +1114,39 @@ document.getElementById('form').addEventListener('submit', function(e){
 
   var record = 'SMS Consent: '+(smsOk?'YES':'NO')+' — '+new Date().toISOString();
 
-  var subject = encodeURIComponent('New Contact Request — AlphaCore Solutions');
-  var body = encodeURIComponent(
-    'Name: '+name+'\n'+
-    'Contact: '+contact+'\n'+
-    'Business: '+(biz||'N/A')+'\n'+
-    'SMS Consent: '+(smsOk?'YES':'NO')+' — '+new Date().toISOString()+'\n\n'+
-    'Message:\n'+(msg||'(none)')
-  );
-  window.location.href = 'mailto:info@alphacoresolutions.co?subject='+subject+'&body='+body;
+  // Se manda al servidor (functions/api/contact.js), que envía el correo por
+  // Resend y deja registrado el consentimiento con fecha e IP. Si eso falla por
+  // lo que sea, caemos al mailto: de siempre — nunca peor que antes.
+  function fallbackMailto(){
+    var subject = encodeURIComponent('New Contact Request — AlphaCore Solutions');
+    var body = encodeURIComponent(
+      'Name: '+name+'\n'+
+      'Contact: '+contact+'\n'+
+      'Business: '+(biz||'N/A')+'\n'+
+      'SMS Consent: '+(smsOk?'YES':'NO')+' — '+new Date().toISOString()+'\n\n'+
+      'Message:\n'+(msg||'(none)')
+    );
+    window.location.href = 'mailto:info@alphacoresolutions.co?subject='+subject+'&body='+body;
+    setTimeout(function(){ showSuccess(name.split(' ')[0], record); }, 800);
+  }
 
-  try{
-    var log = JSON.parse(localStorage.getItem('ac_sms_consent_log')||'[]');
-    log.push({name:name,contact:contact,record:record,ts:new Date().toISOString()});
-    localStorage.setItem('ac_sms_consent_log',JSON.stringify(log));
-  }catch(ex){}
+  var btn = e.target.querySelector('button[type="submit"]');
+  var btnText = btn ? btn.textContent : '';
+  if(btn){ btn.disabled = true; btn.textContent = LANG==='es' ? 'Enviando…' : 'Sending…'; }
 
-  setTimeout(function(){ showSuccess(name.split(' ')[0], record); }, 800);
+  fetch('/api/contact', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({name:name, contact:contact, business:biz, message:msg,
+                          smsConsent:smsOk, honey:honey})
+  })
+  .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+  .then(function(data){
+    if(!data || !data.ok) return Promise.reject('no-ok');
+    showSuccess(name.split(' ')[0], record);
+  })
+  .catch(function(){ fallbackMailto(); })
+  .finally(function(){ if(btn){ btn.disabled = false; btn.textContent = btnText; } });
 });
 
 function showError(msg){
