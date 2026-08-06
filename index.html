@@ -150,8 +150,8 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 .ptoggle{display:flex;width:max-content;margin-inline:auto;align-items:center;gap:4px;background:rgba(10,18,32,.6);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:4px;margin-bottom:44px}
 .ptoggle button{background:none;color:var(--text3);font-weight:600;font-size:14px;padding:9px 18px;border:none;border-radius:9px;cursor:pointer;font-family:inherit;transition:background .2s,color .2s}
 .ptoggle button.active{background:var(--cyan5);color:var(--bg);font-weight:700}
-.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:start}
-.pcard{padding:38px 30px;text-align:center;overflow:visible}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:start}
+.pcard{padding:34px 22px;text-align:center;overflow:visible}
 .pcard>div:first-of-type{justify-content:center!important}
 .pcard-feat{background:linear-gradient(165deg,rgba(13,26,38,.7),rgba(8,19,32,.7));border-color:rgba(34,211,238,.4);box-shadow:0 20px 60px rgba(6,182,212,.13)}
 .plabel{font-size:11px;letter-spacing:2.2px;color:var(--text4);text-transform:uppercase;margin-bottom:22px}
@@ -159,8 +159,10 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 .pprice{font-weight:700;font-size:38px;letter-spacing:-1.6px}
 .pper{font-size:14px;color:var(--text4)}
 .pdsc{font-size:14px;color:var(--text3);line-height:1.68;margin:12px 0 30px;min-height:44px}
-.pfeats{margin:0 auto 32px;display:flex;flex-direction:column;gap:15px;text-align:left;max-width:280px}
-.pfeats li{font-size:14px;color:#dbe4f0;display:flex;gap:9px}
+.pfeats{margin:0 auto 32px;display:flex;flex-direction:column;gap:14px;text-align:left;max-width:280px}
+.pfeats li{font-size:13.5px;color:#dbe4f0;display:flex;gap:9px}
+.pnote{text-align:center;font-size:13.5px;color:var(--text3);line-height:1.7;margin-top:30px;max-width:620px;margin-left:auto;margin-right:auto}
+.pnote-hl{color:#67E8F9;font-weight:700}
 .pcheck{color:var(--cyan);flex-shrink:0}
 .rec-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--cyan);color:var(--bg);font-size:10px;font-weight:800;letter-spacing:1px;padding:5px 14px;border-radius:20px}
 .pbtn{display:block;text-align:center;font-weight:700;font-size:15px;padding:13px;border-radius:var(--radsm)}
@@ -289,6 +291,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}[data-reveal]>*{opacity:1;transform:none}}
 
+@media(max-width:1150px){.pgrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){
  .hero-in{grid-template-columns:1fr}
  .hero-floats{min-height:0;max-width:300px;display:flex;flex-direction:column;gap:12px}
@@ -297,7 +300,8 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
  .bento-echo{grid-column:auto;grid-row:auto}
  .metrics{grid-template-columns:1fr 1fr}
  .metric+.metric{border-left:none}
- .sgrid,.steps,.pgrid,.demo-g,.tgrid,.ct-grid{grid-template-columns:1fr;gap:18px}
+ .sgrid,.steps,.demo-g,.tgrid,.ct-grid{grid-template-columns:1fr;gap:18px}
+ .pgrid{grid-template-columns:1fr;gap:18px}
  .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
  .feat-grid{grid-template-columns:1fr}
 }
@@ -532,12 +536,25 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
   </div>
   <div class="pgrid" data-stagger>
     <article class="card pcard">
+      <p class="plabel">EchoCore</p>
+      <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px"><span class="pprice" id="echoPrice">$99</span><span class="pper">/mo</span></div>
+      <p class="pdsc" data-i18n="echo-plan-desc">For one person who lives on the phone and can't keep missing calls.</p>
+      <ul class="pfeats">
+        <li><span class="pcheck">✓</span><span data-i18n="550 minutes per month">550 minutes per month</span></li>
+        <li><span class="pcheck">✓</span><span data-i18n="EchoCore personal assistant">EchoCore personal assistant</span></li>
+        <li><span class="pcheck">✓</span><span data-i18n="English + Spanish">English + Spanish</span></li>
+        <li><span class="pcheck">✓</span><span data-i18n="Dedicated number included">Dedicated number included</span></li>
+        <li><span class="pcheck">✓</span><span data-i18n="Spam blocking and SMS summaries">Spam blocking and SMS summaries</span></li>
+      </ul>
+      <a href="#contacto" class="pbtn pbtn-o" data-i18n="Get started">Get started</a>
+    </article>
+    <article class="card pcard">
       <p class="plabel">Starter</p>
       <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px"><span class="pprice" id="starterPrice">$129</span><span class="pper">/mo</span></div>
       <p class="pdsc" data-i18n="starter-desc">For businesses starting out that want to stop losing calls today.</p>
       <ul class="pfeats">
+        <li><span class="pcheck">✓</span><span data-i18n="750 minutes per month">750 minutes per month</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="EchoCore or VoiceCore or ChatCore (one)">EchoCore or VoiceCore or ChatCore (one)</span></li>
-        <li><span class="pcheck">✓</span><span data-i18n="Up to 200 calls/messages per month">Up to 200 calls/messages per month</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="English + Spanish">English + Spanish</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="Business number included">Business number included</span></li>
       </ul>
@@ -549,8 +566,8 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
       <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px"><span class="pprice" id="proPrice">$199</span><span class="pper">/mo</span></div>
       <p class="pdsc" data-i18n="pro-desc">What a growing business needs when it can't miss a single appointment.</p>
       <ul class="pfeats">
+        <li><span class="pcheck">✓</span><span data-i18n="1,150 minutes per month">1,150 minutes per month</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="EchoCore or VoiceCore + ChatCore">EchoCore or VoiceCore + ChatCore</span></li>
-        <li><span class="pcheck">✓</span><span data-i18n="Up to 800 calls/messages per month">Up to 800 calls/messages per month</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="Booking in Google Calendar">Booking in Google Calendar</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="Transfer to a human agent">Transfer to a human agent</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="Bilingual support">Bilingual support</span></li>
@@ -563,7 +580,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
       <p class="pdsc" data-i18n="biz-desc">For businesses with multiple locations or heavy customer flow.</p>
       <ul class="pfeats">
         <li><span class="pcheck">✓</span><span data-i18n="Everything in Pro">Everything in Pro</span></li>
-        <li><span class="pcheck">✓</span><span data-i18n="Unlimited volume">Unlimited volume</span></li>
+        <li><span class="pcheck">✓</span><span data-i18n="Custom volume, set in your agreement">Custom volume, set in your agreement</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="Multiple locations/branches">Multiple locations/branches</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="Custom integrations">Custom integrations</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="Priority support">Priority support</span></li>
@@ -571,6 +588,10 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
       <a href="#contacto" class="pbtn pbtn-o" data-i18n="Talk to sales">Talk to sales</a>
     </article>
   </div>
+  <p class="pnote">
+    <strong class="pnote-hl" data-i18n="overage-headline">Go over your minutes and we keep answering — we never cut off your service.</strong>
+    <span data-i18n="overage-note">Extra minutes are billed at $0.25/min, and you can see your usage anytime in your client portal. Setup fee $75–$100 depending on the plan.</span>
+  </p>
 </section>
 
 <!-- ════════════════════ DEMO ════════════════════ -->
@@ -781,17 +802,24 @@ var DICT = {
   'A plan for every stage of your business.':'Un plan para cada etapa de tu negocio.',
   'price-sub':'Empieza pequeño, escala cuando quieras. Bilingüe, sin sorpresas. Cancela cuando gustes.',
   'Monthly':'Mensual','Annual':'Anual',
+  'echo-plan-desc':'Para una persona que vive del teléfono y no puede seguir perdiendo llamadas.',
+  '550 minutes per month':'550 minutos al mes',
+  'EchoCore personal assistant':'Asistente personal EchoCore',
+  'Dedicated number included':'Número propio incluido',
+  'Spam blocking and SMS summaries':'Bloqueo de spam y resúmenes por SMS',
   'starter-desc':'Para negocios que empiezan y quieren dejar de perder llamadas hoy.',
   'EchoCore or VoiceCore or ChatCore (one)':'EchoCore o VoiceCore o ChatCore (uno)',
-  'Up to 200 calls/messages per month':'Hasta 200 llamadas/mensajes al mes',
+  '750 minutes per month':'750 minutos al mes',
   'English + Spanish':'Español + inglés','Business number included':'Número de negocio incluido','Get started':'Empezar ahora',
   'pro-desc':'Lo que necesita un negocio que ya está creciendo y no puede perder ni una cita.',
   'EchoCore or VoiceCore + ChatCore':'EchoCore o VoiceCore + ChatCore',
-  'Up to 800 calls/messages per month':'Hasta 800 llamadas/mensajes al mes',
+  '1,150 minutes per month':'1,150 minutos al mes',
   'Booking in Google Calendar':'Agenda en Google Calendar','Transfer to a human agent':'Transferencia a agente humano',
   'Bilingual support':'Soporte bilingüe',
   'Contact us':'Contactar','biz-desc':'Para negocios con múltiples ubicaciones o flujo intenso de clientes.',
-  'Everything in Pro':'Todo lo de Pro','Unlimited volume':'Volumen ilimitado','Multiple locations/branches':'Múltiples ubicaciones/sucursales',
+  'Everything in Pro':'Todo lo de Pro','Custom volume, set in your agreement':'Volumen a la medida, definido en tu contrato','Multiple locations/branches':'Múltiples ubicaciones/sucursales',
+  'overage-headline':'Si te pasas de tus minutos seguimos contestando — nunca cortamos tu servicio.',
+  'overage-note':'Los minutos extra se cobran a $0.25/min y puedes ver tu consumo cuando quieras en tu portal de cliente. Costo de instalación $75–$100 según el plan.',
   'Custom integrations':'Integraciones a la medida','Priority support':'Soporte prioritario','Talk to sales':'Hablar con ventas',
   'Live demo':'Demo en vivo','Watch your AI receptionist work.':'Mira a tu recepcionista AI trabajar.',
   'demo-sub':'Una llamada real, en español, agendando una cita. El calendario se llena solo — sin tocar nada.',
@@ -894,6 +922,7 @@ var annual = false;
 var btnM = document.getElementById('btnMonthly');
 var btnA = document.getElementById('btnAnnual');
 function updatePricing(){
+  document.getElementById('echoPrice').textContent = annual ? '$79' : '$99';
   document.getElementById('starterPrice').textContent = annual ? '$103' : '$129';
   document.getElementById('proPrice').textContent = annual ? '$159' : '$199';
   btnM.classList.toggle('active', !annual);
