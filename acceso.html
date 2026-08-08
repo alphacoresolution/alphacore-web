@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acceso Clientes · AlphaCore Solutions</title>
+<meta name="description" content="Entra a tu plataforma de AlphaCore Solutions — asistente de voz o mensajes.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/logo.png">
+<style>
+  :root{
+    --bg:#040D1A; --panel:rgba(13,26,38,.55); --border:rgba(255,255,255,.08);
+    --text:#e8eef7; --text2:#c9d3e0; --text3:#a9b6c9; --text4:#8b98ab;
+    --cyan:#22D3EE; --cyan5:#06B6D4;
+    --violet:#A78BFA; --violet5:#8B5CF6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--text); min-height:100vh;
+    font-family:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:40px 22px; position:relative; overflow-x:hidden;
+  }
+  body::before{
+    content:''; position:fixed; inset:0; pointer-events:none;
+    background:
+      radial-gradient(70vw 70vw at 15% -10%, rgba(6,182,212,.13), transparent 60%),
+      radial-gradient(60vw 60vw at 88% 108%, rgba(139,92,246,.10), transparent 60%);
+  }
+  .wrap{width:100%; max-width:840px; position:relative; z-index:1}
+
+  header{text-align:center; margin-bottom:38px}
+  header img{height:52px; width:auto; margin-bottom:24px}
+  h1{font-size:clamp(26px,4.4vw,36px); font-weight:700; letter-spacing:-.9px; margin-bottom:10px}
+  header p{font-size:16px; color:var(--text3); line-height:1.6; max-width:44ch; margin:0 auto}
+
+  .cards{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+  .card{
+    display:block; text-decoration:none; color:inherit;
+    background:var(--panel); border:1px solid var(--border); border-radius:18px;
+    padding:30px 28px 26px; backdrop-filter:blur(8px);
+    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    position:relative; overflow:hidden;
+  }
+  .card::after{
+    content:''; position:absolute; inset:0; border-radius:inherit;
+    opacity:0; transition:opacity .25s ease; pointer-events:none;
+  }
+  .card:hover{transform:translateY(-4px)}
+  .card:focus-visible{outline:2px solid var(--cyan); outline-offset:3px}
+  .card.voz:hover{border-color:rgba(34,211,238,.45); box-shadow:0 18px 46px rgba(6,182,212,.18)}
+  .card.voz::after{background:radial-gradient(420px circle at 50% 0%, rgba(34,211,238,.10), transparent 70%)}
+  .card.txt:hover{border-color:rgba(167,139,250,.45); box-shadow:0 18px 46px rgba(139,92,246,.18)}
+  .card.txt::after{background:radial-gradient(420px circle at 50% 0%, rgba(167,139,250,.10), transparent 70%)}
+  .card:hover::after{opacity:1}
+
+  .ico{
+    width:56px; height:56px; border-radius:16px; margin-bottom:18px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .voz .ico{background:rgba(6,182,212,.13); border:1px solid rgba(34,211,238,.24)}
+  .txt .ico{background:rgba(139,92,246,.13); border:1px solid rgba(167,139,250,.24)}
+
+  .label{
+    font-size:11px; font-weight:700; letter-spacing:2.2px; text-transform:uppercase;
+    margin-bottom:7px;
+  }
+  .voz .label{color:var(--cyan)}
+  .txt .label{color:var(--violet)}
+
+  .card h2{font-size:21px; font-weight:700; letter-spacing:-.4px; margin-bottom:9px}
+  .card p{font-size:14.5px; color:var(--text3); line-height:1.65; margin-bottom:18px}
+  .card ul{list-style:none; margin-bottom:22px}
+  .card li{
+    font-size:13.5px; color:var(--text4); line-height:1.5;
+    padding-left:16px; position:relative; margin-bottom:5px;
+  }
+  .card li::before{
+    content:''; position:absolute; left:0; top:8px;
+    width:5px; height:5px; border-radius:50%;
+  }
+  .voz li::before{background:var(--cyan)}
+  .txt li::before{background:var(--violet)}
+
+  .go{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:15px; font-weight:700; padding:12px 22px; border-radius:11px;
+    transition:gap .2s ease;
+  }
+  .voz .go{background:var(--cyan5); color:var(--bg)}
+  .txt .go{background:var(--violet5); color:#fff}
+  .card:hover .go{gap:13px}
+
+  .help{
+    margin-top:34px; text-align:center; font-size:14px;
+    color:var(--text4); line-height:1.75;
+  }
+  .help a{color:var(--cyan); text-decoration:none; font-weight:600}
+  .help a:hover{text-decoration:underline}
+  .help .back{
+    display:inline-block; margin-top:18px; font-size:13.5px; color:var(--text4);
+  }
+
+  @media(max-width:680px){
+    .cards{grid-template-columns:1fr}
+    body{padding:32px 18px}
+    header{margin-bottom:28px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .card,.card::after,.go{transition:none}
+    .card:hover{transform:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <img src="/logo.png" alt="AlphaCore Solutions">
+    <h1>Acceso Clientes</h1>
+    <p>Elige el asistente que contrataste para entrar a tu panel.</p>
+  </header>
+
+  <div class="cards">
+
+    <!-- ── VOZ ── -->
+    <a class="card voz" href="https://echocore-production-8c53.up.railway.app/portal/login">
+      <div class="ico">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2" stroke-linecap="round">
+          <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z" fill="#22D3EE" stroke="none"/>
+        </svg>
+      </div>
+      <div class="label">Llamadas</div>
+      <h2>Asistente de Voz</h2>
+      <p>Si tu asistente contesta el teléfono por ti.</p>
+      <ul>
+        <li>Historial de llamadas</li>
+        <li>Citas agendadas</li>
+        <li>Números VIP y bloqueados</li>
+        <li>Disponible · ocupado · silencio</li>
+      </ul>
+      <span class="go">Entrar →</span>
+    </a>
+
+    <!-- ── TEXTO ── -->
+    <a class="card txt" href="https://chatcore-production-7184.up.railway.app/portal/login">
+      <div class="ico">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-4-.9L3 21l1.9-4.9A8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4Z"/>
+        </svg>
+      </div>
+      <div class="label">WhatsApp y SMS</div>
+      <h2>Asistente de Mensajes</h2>
+      <p>Si tu asistente responde los mensajes de tus clientes.</p>
+      <ul>
+        <li>Conversaciones completas</li>
+        <li>Citas agendadas</li>
+        <li>Configuración de tu negocio</li>
+        <li>Pausar o activar el asistente</li>
+      </ul>
+      <span class="go">Entrar →</span>
+    </a>
+
+  </div>
+
+  <p class="help">
+    ¿No sabes cuál te toca, o perdiste tu contraseña?<br>
+    Escríbenos al <a href="tel:+16123244413">612-324-4413</a>
+    o a <a href="mailto:info@alphacoresolutions.co">info@alphacoresolutions.co</a>
+    <br>
+    <a class="back" href="/">← Volver al sitio</a>
+  </p>
+
+</div>
+
+</body>
+</html>
