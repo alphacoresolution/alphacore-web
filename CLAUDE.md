@@ -50,6 +50,16 @@ Edita los archivos normalmente.
 | `favicon.png` | 180×180, el símbolo triangular sobre navy. Sirve de `icon` y `apple-touch-icon` |
 | `og-image.png` | 1200×630, vista previa al compartir el link. Fuente editable en `alphacore-docs/og-image/og-fuente.html` — **si cambias el texto hay que volver a renderizar el PNG**, no basta con editar el HTML |
 
+## Efecto de títulos (dust reveal)
+Los 7 `<h2 class="stitle">` se arman desde partículas cyan al entrar en pantalla
+(módulo "Dust text reveal" al final del `<script>` de `index.html`, canvas vanilla).
+El texto real queda en el DOM con `color:transparent` durante la animación —
+SEO, selección y ES/EN intactos. Se repite en cada scroll, densidad reducida en
+móvil, desactivado con `prefers-reduced-motion`, y ante cualquier fallo el título
+siempre se muestra (`abort()`). Reemplazó al shimmer sweep en ago-2026.
+⚠️ Los títulos deben seguir siendo UN solo nodo de texto (sin `<span>` internos)
+o el muestreo hace fallback a mostrar el texto sin animación.
+
 ## Bilingüe
 El sitio es ES/EN con un botón. Las traducciones viven en un diccionario JS dentro
 de `index.html`; los elementos traducibles llevan `data-i18n="clave"`.
