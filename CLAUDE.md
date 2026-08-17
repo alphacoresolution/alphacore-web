@@ -84,16 +84,19 @@ Pendiente decidir si se detecta el idioma del navegador.
 Ambos formularios (home y `contact.html`) hacen `fetch('/api/contact', …)`.
 Si el servidor falla, **caen a `mailto:` como respaldo** — no es un bug, es el plan B.
 
-## Pricing actual (verificado en el HTML)
+## Pricing actual (verificado en el HTML — subida de precios 17-ago-2026)
 | Plan | Mensual | Anual |
 |---|---|---|
-| Starter | $129/mes | $103/mes |
+| EchoCore | $129/mes | $103/mes |
+| Starter | $149/mes | $119/mes |
 | Pro | $199/mes | $159/mes |
 | Business | Contactar | Contactar |
 
+- **Add-on pedidos restaurante: +$50/mes sobre Pro** (franja "Add-ons" bajo las tarjetas de precios)
 - Minutos extra: **$0.25/min**
 - Instalación: **$75–$100 según el plan** — sí aparece en el sitio
 - Debe coincidir con el catálogo del portal (`plans.js` en el repo `echocore`)
+- Los precios viven en DOS lugares del HTML: las tarjetas y el JS del toggle mensual/anual (`updatePricing`) — cambiar ambos
 
 ## Deploy
 - **Hosting:** Cloudflare Pages, conectado al repo de GitHub

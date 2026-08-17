@@ -486,6 +486,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
         <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Books, reschedules and cancels appointments">Books, reschedules and cancels appointments</span></li>
         <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Takes messages and transfers calls">Takes messages and transfers calls</span></li>
         <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Sends you a transcript by SMS">Sends you a transcript by SMS</span></li>
+        <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Takes restaurant orders with exact totals">Takes restaurant orders with exact totals</span></li>
       </ul>
     </article>
     <!-- ChatCore -->
@@ -561,7 +562,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
   <div class="pgrid" data-stagger>
     <article class="card pcard">
       <p class="plabel">EchoCore</p>
-      <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px"><span class="pprice" id="echoPrice">$99</span><span class="pper">/mo</span></div>
+      <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px"><span class="pprice" id="echoPrice">$129</span><span class="pper">/mo</span></div>
       <p class="pdsc" data-i18n="echo-plan-desc">For one person who lives on the phone and can't keep missing calls.</p>
       <ul class="pfeats">
         <li><span class="pcheck">✓</span><span data-i18n="550 minutes per month">550 minutes per month</span></li>
@@ -574,7 +575,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
     </article>
     <article class="card pcard">
       <p class="plabel">Starter</p>
-      <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px"><span class="pprice" id="starterPrice">$129</span><span class="pper">/mo</span></div>
+      <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px"><span class="pprice" id="starterPrice">$149</span><span class="pper">/mo</span></div>
       <p class="pdsc" data-i18n="starter-desc">For businesses starting out that want to stop losing calls today.</p>
       <ul class="pfeats">
         <li><span class="pcheck">✓</span><span data-i18n="750 minutes per month">750 minutes per month</span></li>
@@ -611,6 +612,14 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
       </ul>
       <a href="#contacto" class="pbtn pbtn-o" data-i18n="Talk to sales">Talk to sales</a>
     </article>
+  </div>
+  <div class="card" style="margin-top:26px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between;padding:24px 28px">
+    <div style="flex:1;min-width:260px">
+      <p class="plabel" style="margin-bottom:6px" data-i18n="Add-ons">Add-ons</p>
+      <p style="font-weight:700;font-size:17px;margin-bottom:4px;color:#fff" data-i18n="addon-rest-title">Have a restaurant? Add phone order-taking.</p>
+      <p class="pdsc" style="margin:0" data-i18n="addon-rest-desc">Sofia takes the complete order over the phone — exact totals, tax included — and sends it straight to your kitchen screen. +$50/mo on the Pro plan. More add-ons available: just ask.</p>
+    </div>
+    <a href="#contacto" class="pbtn pbtn-o" style="flex:0 0 auto" data-i18n="Talk to sales">Talk to sales</a>
   </div>
   <p class="pnote">
     <strong class="pnote-hl" data-i18n="overage-headline">Go over your minutes and we keep answering — we never cut off your service.</strong>
@@ -845,6 +854,10 @@ var DICT = {
   'overage-headline':'Si te pasas de tus minutos seguimos contestando — nunca cortamos tu servicio.',
   'overage-note':'Los minutos extra se cobran a $0.25/min y puedes ver tu consumo cuando quieras en tu portal de cliente. Costo de instalación $75–$100 según el plan.',
   'Custom integrations':'Integraciones a la medida','Priority support':'Soporte prioritario','Talk to sales':'Hablar con ventas',
+  'Add-ons':'Complementos',
+  'addon-rest-title':'¿Tienes restaurante? Agrega la toma de órdenes por teléfono.',
+  'addon-rest-desc':'Sofia toma el pedido completo por teléfono — total exacto, con impuesto — y lo manda directo a tu pantalla de cocina. +$50/mes sobre el plan Pro. Hay más complementos disponibles: pregúntanos.',
+  'Takes restaurant orders with exact totals':'Toma órdenes de restaurante con total exacto',
   'Live demo':'Demo en vivo','Watch your AI receptionist work.':'Mira a tu recepcionista AI trabajar.',
   'demo-sub':'Una llamada real, en español, agendando una cita. El calendario se llena solo — sin tocar nada.',
   'LIVE CALL':'LLAMADA EN VIVO','Booking a service appointment':'Agendando cita de servicio',
@@ -948,8 +961,8 @@ var annual = false;
 var btnM = document.getElementById('btnMonthly');
 var btnA = document.getElementById('btnAnnual');
 function updatePricing(){
-  document.getElementById('echoPrice').textContent = annual ? '$79' : '$99';
-  document.getElementById('starterPrice').textContent = annual ? '$103' : '$129';
+  document.getElementById('echoPrice').textContent = annual ? '$103' : '$129';
+  document.getElementById('starterPrice').textContent = annual ? '$119' : '$149';
   document.getElementById('proPrice').textContent = annual ? '$159' : '$199';
   btnM.classList.toggle('active', !annual);
   btnA.classList.toggle('active', annual);
