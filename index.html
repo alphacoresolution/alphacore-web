@@ -130,8 +130,8 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 .metric-lbl{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:2px;color:var(--text5);text-transform:uppercase;margin-top:20px;line-height:1.5}
 
 /* ── BENTO PRODUCTS ── */
-.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(210px,auto);gap:26px}
-.bento-echo{grid-column:span 2;grid-row:span 2;background:linear-gradient(165deg,rgba(13,26,38,.6),rgba(7,17,31,.6));border-color:rgba(34,211,238,.28);padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:32px}
+.bento{display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:auto;gap:26px}
+.bento-echo{grid-column:1/-1;background:linear-gradient(165deg,rgba(13,26,38,.6),rgba(7,17,31,.6));border-color:rgba(34,211,238,.28);padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:32px}
 .plbl{font-size:10px;letter-spacing:2.2px;color:var(--text5);text-transform:uppercase;margin-bottom:22px;text-align:center}
 .ptitle{font-weight:700;font-size:28px;letter-spacing:-.7px;margin-bottom:22px;text-align:center}
 .ptitle-sm{font-weight:700;font-size:22px;letter-spacing:-.5px;margin-bottom:18px;text-align:center}
@@ -890,6 +890,7 @@ function toggleLang(){
   try{ localStorage.setItem('ac_lang', LANG); }catch(e){}
   if(window.__dustSettle) window.__dustSettle(); // el muestreo del polvo quedó obsoleto
   applyI18n();
+  if(window.__lockHero) window.__lockHero();     // las frases del otro idioma miden distinto
 }
 
 /* ── Mobile menu ── */
@@ -977,6 +978,28 @@ function typeTick(){
   typingEl.textContent = (list[pi]||'').slice(0, Math.max(0,ci));
 }
 if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(typeTick, 1800);
+
+/* El H1 reserva desde el inicio la altura de su frase MÁS LARGA (medida con
+   un clon invisible), para que el resto del hero no brinque mientras el
+   texto se escribe y borra. Se recalcula al cambiar idioma o tamaño. */
+window.__lockHero = function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var h1 = typingEl.closest('h1');
+  if(!h1) return;
+  var clone = h1.cloneNode(true);
+  clone.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;left:0;top:0;width:'+h1.clientWidth+'px;min-height:0;margin:0';
+  var tspan = clone.querySelector('.typing');
+  h1.parentNode.appendChild(clone);
+  var max = 0;
+  phrases().forEach(function(w){ tspan.textContent = w; if(clone.offsetHeight > max) max = clone.offsetHeight; });
+  clone.parentNode.removeChild(clone);
+  if(max) h1.style.minHeight = max+'px';
+};
+window.__lockHero();
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(window.__lockHero);
+var lockT; window.addEventListener('resize', function(){
+  clearTimeout(lockT); lockT = setTimeout(window.__lockHero, 150);
+});
 
 /* ── Hero conversation loop ── */
 var SCRIPT_EN = [
@@ -1427,6 +1450,259 @@ if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-moti
 } else {
   /* Sin IO o con reduced-motion: jamás ocultar los títulos */
   document.querySelectorAll('.stitle').forEach(function(el){ el.classList.remove('dust-hide'); });
+}
+
+/* ── SVG Particle en tarjetas de producto ──
+   La silueta de cada asistente se arma con partículas cyan al entrar la
+   tarjeta en pantalla (EchoCore: tabla de pendientes · VoiceCore: teléfono ·
+   ChatCore: burbuja SMS dibujada por código). En escritorio el cursor
+   repele las partículas y el resorte las regresa a su lugar. */
+if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+(function(){
+  var bento = document.querySelector('.bento');
+  if(!bento) return;
+  var cards = bento.querySelectorAll('.card');
+  if(cards.length < 3) return;
+  var isMobile = window.matchMedia('(max-width: 768px)').matches;
+  var hasHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var STEP = isMobile ? 4 : 3;
+  var SPRING = .06, DAMP = .86, REP_R = 85, REP_F = 2.4;
+
+  /* Mismo sprite que los títulos: núcleo blanco, halo cyan */
+  var SPR = 32, sprite = document.createElement('canvas');
+  sprite.width = sprite.height = SPR;
+  (function(){
+    var g = sprite.getContext('2d'), r = SPR/2;
+    var grad = g.createRadialGradient(r,r,0,r,r,r);
+    grad.addColorStop(0,'rgba(255,255,255,.95)');
+    grad.addColorStop(.28,'rgba(34,211,238,.55)');
+    grad.addColorStop(1,'rgba(34,211,238,0)');
+    g.fillStyle = grad; g.fillRect(0,0,SPR,SPR);
+  })();
+
+  /* Cada figura: de dónde salen los puntos y cómo se acomoda en su tarjeta */
+  var ECHO_ZONE = 340;   /* ancho de la columna reservada a la figura de EchoCore (desktop) */
+  var shapes = [
+    {card:cards[0], img:'dust-echocore.png',  kind:'echo',  alpha:.78},
+    {card:cards[1], img:'dust-voicecore.png', kind:'voice', alpha:.85},
+    {card:cards[2], img:null,                 kind:'chat',  alpha:.85}
+  ];
+
+  /* Zona propia para cada figura, decidida por el ancho REAL de su tarjeta:
+     si cabe, columna derecha (texto izquierda, figura derecha, misma altura);
+     si la tarjeta es angosta (móvil), franja inferior. El padding de la
+     tarjeta reserva la zona para que el polvo nunca se encime con el texto. */
+  function layout(shape){
+    var card = shape.card, w = card.clientWidth;
+    var wide = shape.kind === 'echo' ? w >= 700 : w >= 470;
+    if(wide){
+      shape.mode = 'right';
+      shape.zone = shape.kind === 'echo' ? ECHO_ZONE : 230;
+      shape.ih   = shape.kind === 'echo' ? 440 : (shape.kind === 'voice' ? 290 : 175);
+      shape.max  = shape.kind === 'echo' ? 1900 : (shape.kind === 'voice' ? 1500 : 800);
+      card.style.paddingBottom = '';
+      card.style.paddingRight = shape.zone+'px';
+    } else {
+      shape.mode = 'bottom';
+      shape.ih   = shape.kind === 'echo' ? 300 : (shape.kind === 'voice' ? 240 : 150);
+      shape.max  = shape.kind === 'echo' ? 950 : (shape.kind === 'voice' ? 800 : 450);
+      card.style.paddingRight = '';
+      card.style.paddingBottom = (shape.ih + 30)+'px';
+    }
+    /* los adornos viejos de estas tarjetas (anillos/puntos) ceden su lugar */
+    var deco = card.querySelector('.spin-rings, .chat-dots');
+    if(deco) deco.style.display = 'none';
+  }
+  shapes.forEach(layout);
+
+  /* Burbuja de ChatCore: solo el globo de mensaje relleno,
+     con su colita curva abajo-izquierda (sin marco) */
+  function drawBubble(g, w, h){
+    g.fillStyle = '#fff';
+    var cx = w*.52, cy = h*.40, rx = w*.44, ry = h*.34;
+    g.beginPath();
+    g.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+    g.fill();
+    g.beginPath();                                   /* colita corta */
+    g.moveTo(cx - rx*.52, cy + ry*.72);
+    g.quadraticCurveTo(cx - rx*.62, cy + ry*1.05, cx - rx*.85, cy + ry*1.22);
+    g.quadraticCurveTo(cx - rx*.48, cy + ry*1.16, cx - rx*.26, cy + ry*.93);
+    g.closePath(); g.fill();
+  }
+
+  function samplePoints(shape, done){
+    var card = shape.card;
+    var cw = card.clientWidth, chh = card.clientHeight;
+    if(cw < 60 || chh < 60){ done(null); return; }
+    function fromCanvas(off, iw, ih){
+      var g = off.getContext('2d', {willReadFrequently:true});
+      var data = g.getImageData(0,0,iw,ih).data;
+      /* mapa de píxeles "figura" para poder detectar bordes */
+      function hit(x,y){
+        if(x<0||y<0||x>=iw||y>=ih) return false;
+        var i = (y*iw+x)*4;
+        /* imágenes: píxel oscuro y opaco · burbuja: trazo blanco sobre transparente */
+        return shape.img ? (data[i+3] > 140 && (data[i]+data[i+1]+data[i+2]) < 360)
+                         : data[i+3] > 140;
+      }
+      /* borde = píxel de figura con al menos un vecino fuera de la figura.
+         El contorno se muestrea fino y brillante; el interior, ralo y tenue. */
+      var E = 2;
+      function isEdge(x,y){
+        return !hit(x-E,y) || !hit(x+E,y) || !hit(x,y-E) || !hit(x,y+E);
+      }
+      var STEP_EDGE = isMobile ? 3 : 2, STEP_INT = isMobile ? 7 : 6;
+      var edges = [], inner = [];
+      for(var y=0;y<ih;y+=STEP_EDGE)
+        for(var x=0;x<iw;x+=STEP_EDGE){
+          if(!hit(x,y)) continue;
+          if(isEdge(x,y)) edges.push([x,y]);
+          else if(x % STEP_INT < STEP_EDGE && y % STEP_INT < STEP_EDGE) inner.push([x,y]);
+        }
+      if(!edges.length && !inner.length){ done(null); return; }
+      /* si sobran puntos, el interior se sacrifica primero — el contorno manda */
+      while(edges.length + inner.length > shape.max && inner.length)
+        inner.splice(Math.floor(Math.random()*inner.length),1);
+      while(edges.length > shape.max) edges.splice(Math.floor(Math.random()*edges.length),1);
+      var pts = edges.map(function(p){ return {x:p[0], y:p[1], edge:true}; })
+        .concat(inner.map(function(p){ return {x:p[0], y:p[1], edge:false}; }));
+      /* posición: centrada dentro de SU zona reservada */
+      var ox, oy;
+      if(shape.mode === 'right'){ ox = cw - (shape.zone + iw)/2; oy = (chh - ih)/2; }
+      else { ox = (cw - iw)/2; oy = chh - ih - 16; }
+      if(ox < 8) ox = 8;
+      done({pts:pts, ox:ox, oy:oy, w:cw, h:chh});
+    }
+    var ih = Math.min(shape.ih, chh*.94);
+    if(shape.img){
+      var im = new Image();
+      im.onload = function(){
+        var iw = Math.round(ih * im.width / im.height);
+        var maxW = shape.mode === 'right' ? shape.zone - 24 : cw*.8;
+        if(iw > maxW){ iw = Math.round(maxW); ih = Math.round(iw * im.height / im.width); }
+        var off = document.createElement('canvas');
+        off.width = iw; off.height = Math.round(ih);
+        off.getContext('2d').drawImage(im, 0, 0, iw, Math.round(ih));
+        fromCanvas(off, iw, Math.round(ih));
+      };
+      im.onerror = function(){ done(null); };
+      im.src = shape.img;
+    } else {
+      var iw = Math.round(ih);   /* ícono cuadrado */
+      var off = document.createElement('canvas');
+      off.width = iw; off.height = Math.round(ih);
+      drawBubble(off.getContext('2d'), iw, Math.round(ih));
+      fromCanvas(off, iw, Math.round(ih));
+    }
+  }
+
+  shapes.forEach(function(shape){
+    var card = shape.card;
+    var st = {phase:'idle', canvas:null, raf:0, parts:null, mx:-9e4, my:-9e4, visible:false};
+    shape.st = st;
+
+    /* el contenido de la tarjeta queda por encima del polvo */
+    Array.prototype.forEach.call(card.children, function(ch){
+      if(getComputedStyle(ch).position === 'static'){ ch.style.position = 'relative'; ch.style.zIndex = '1'; }
+    });
+
+    if(hasHover){
+      card.addEventListener('pointermove', function(e){
+        if(!st.canvas) return;
+        var r = st.canvas.getBoundingClientRect();
+        st.mx = e.clientX - r.left; st.my = e.clientY - r.top;
+      });
+      card.addEventListener('pointerleave', function(){ st.mx = st.my = -9e4; });
+    }
+
+    function start(){
+      if(st.phase === 'run') return;
+      st.phase = 'load';
+      try{
+        samplePoints(shape, function(s){
+          if(!s || !st.visible){ st.phase = 'idle'; return; }
+          var cv = st.canvas || (st.canvas = document.createElement('canvas'));
+          cv.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:0';
+          cv.width = Math.ceil(s.w*DPR); cv.height = Math.ceil(s.h*DPR);
+          cv.style.width = s.w+'px'; cv.style.height = s.h+'px';
+          if(cv.parentNode !== card) card.insertBefore(cv, card.firstChild);
+          st.parts = s.pts.map(function(p){
+            var ang = Math.random()*Math.PI*2, dist = 60 + Math.random()*160;
+            var hx = s.ox + p.x, hy = s.oy + p.y;
+            return {hx:hx, hy:hy,
+              x:hx + Math.cos(ang)*dist, y:hy + Math.sin(ang)*dist,
+              vx:0, vy:0, d:Math.random()*480,
+              sz:p.edge ? 5 + Math.random()*3.5 : 3 + Math.random()*2,
+              f:2 + Math.random()*3, ph:Math.random()*Math.PI*2,
+              a:(p.edge ? .8 + Math.random()*.2 : .3 + Math.random()*.3)*shape.alpha};
+          });
+          st.phase = 'run';
+          var ctx = cv.getContext('2d'), t0 = performance.now();
+          (function frame(now){
+            if(st.phase !== 'run') return;
+            ctx.setTransform(DPR,0,0,DPR,0,0);
+            ctx.clearRect(0,0,s.w,s.h);
+            ctx.globalCompositeOperation = 'lighter';
+            for(var i=0;i<st.parts.length;i++){
+              var p = st.parts[i];
+              var age = now - t0 - p.d;
+              if(age < 0) continue;
+              /* resorte hacia casa (con vaivén sutil para que el polvo respire) */
+              var homeX = p.hx + Math.sin(now*.0011*p.f + p.ph)*2.2;
+              var homeY = p.hy + Math.cos(now*.0009*p.f + p.ph)*2.2;
+              p.vx += (homeX - p.x)*SPRING; p.vy += (homeY - p.y)*SPRING;
+              /* repulsión del cursor */
+              var dx = p.x - st.mx, dy = p.y - st.my;
+              var d2 = dx*dx + dy*dy;
+              if(d2 < REP_R*REP_R && d2 > .01){
+                var dd = Math.sqrt(d2), push = (1 - dd/REP_R)*REP_F;
+                p.vx += dx/dd*push*6; p.vy += dy/dd*push*6;
+              }
+              p.vx *= DAMP; p.vy *= DAMP;
+              p.x += p.vx; p.y += p.vy;
+              ctx.globalAlpha = Math.min(1, age/400) * p.a;
+              ctx.drawImage(sprite, p.x - p.sz/2, p.y - p.sz/2, p.sz, p.sz);
+            }
+            st.raf = requestAnimationFrame(frame);
+          })(t0);
+        });
+      }catch(err){ stop(); }
+    }
+
+    function stop(){
+      cancelAnimationFrame(st.raf);
+      st.phase = 'idle';
+      if(st.canvas){
+        var c = st.canvas.getContext('2d');
+        c.setTransform(1,0,0,1,0,0);
+        c.clearRect(0,0,st.canvas.width,st.canvas.height);
+      }
+    }
+    shape.stop = stop; shape.start = start;
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        st.visible = e.isIntersecting && e.intersectionRatio >= .15;
+        if(st.visible && st.phase === 'idle') start();
+        else if(!e.isIntersecting && st.phase === 'run') stop();  /* se re-arma al volver */
+      });
+    },{threshold:[0,.15]});
+    io.observe(card);
+  });
+
+  /* En resize la geometría quedó vieja: recalcular zonas y re-armar las visibles */
+  var rszT2; window.addEventListener('resize', function(){
+    clearTimeout(rszT2);
+    rszT2 = setTimeout(function(){
+      isMobile = window.matchMedia('(max-width: 768px)').matches;
+      shapes.forEach(function(shape){
+        layout(shape);
+        if(shape.st.phase === 'run'){ shape.stop(); shape.start(); }
+      });
+    }, 200);
+  });
+})();
 }
 
 /* ── Magnetic buttons (desktop only) ── */

@@ -60,6 +60,18 @@ siempre se muestra (`abort()`). Reemplazó al shimmer sweep en ago-2026.
 ⚠️ Los títulos deben seguir siendo UN solo nodo de texto (sin `<span>` internos)
 o el muestreo hace fallback a mostrar el texto sin animación.
 
+## Figuras de partículas en Productos (SVG Particle)
+Las 3 tarjetas del bento llevan una figura de polvo cyan con repulsión del
+cursor (módulo "SVG Particle en tarjetas" en el `<script>`): EchoCore =
+`dust-echocore.png` (asistente con tabla), VoiceCore = `dust-voicecore.png`
+(asistente con teléfono), ChatCore = globo SMS dibujado por código
+(`drawBubble`). Cada figura tiene ZONA RESERVADA vía padding de la tarjeta
+(columna derecha en pantallas anchas, franja inferior en angostas) — el
+polvo nunca debe encimarse con el texto. El bento es de 2 columnas
+(EchoCore ancha arriba). Los adornos viejos `.spin-rings`/`.chat-dots` se
+ocultan por JS cuando el efecto corre. El H1 del hero lleva `min-height`
+calculado (`__lockHero`) para que la frase animada no desplace el layout.
+
 ## Bilingüe
 El sitio es ES/EN con un botón. Las traducciones viven en un diccionario JS dentro
 de `index.html`; los elementos traducibles llevan `data-i18n="clave"`.
