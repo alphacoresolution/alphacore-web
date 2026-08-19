@@ -396,8 +396,8 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 /* ── Globo de letras (hero) ─────────────────────────────────────────
    Esfera tejida con letras; adentro se arma el nombre de cada marca:
    AlphaCore → EchoCore → VoiceCore → ChatCore.                    */
-.hero-globe{display:flex;align-items:center;justify-content:center;min-height:430px}
-.hero-globe canvas{width:100%;max-width:460px;height:auto;display:block;cursor:pointer}
+.hero-globe{display:flex;align-items:center;justify-content:center;min-height:430px;max-width:560px;width:100%}
+.hero-globe canvas{width:100%;max-width:560px;height:auto;display:block;cursor:pointer}
 @media(max-width:960px){.hero-globe{min-height:0}}
 </style>
 </head>
@@ -1803,6 +1803,18 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matc
   if(!wrap || !canvas) return;
 
   var WORDS = ['AlphaCore','EchoCore','VoiceCore','ChatCore'];
+  // Etiqueta chica bajo cada nombre. Sigue el switch de idioma del sitio
+  // (LANG vive en este mismo script) — se lee al momento de dibujar.
+  var SUBS = {
+    AlphaCore: { es: 'Solutions',     en: 'Solutions' },
+    EchoCore:  { es: 'Asistente',     en: 'Assistant' },
+    VoiceCore: { es: 'Recepcionista', en: 'Receptionist' },
+    ChatCore:  { es: 'Mensajes',      en: 'Messages' }
+  };
+  function subFor(word){
+    var lang = (typeof LANG !== 'undefined' && LANG === 'es') ? 'es' : 'en';
+    return (SUBS[word] || {})[lang] || '';
+  }
   var CYAN = '#22D3EE', WHITE = '#F2FDFF';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ctx = canvas.getContext('2d');
@@ -1821,12 +1833,12 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matc
 
   function build(){
     var rect = wrap.getBoundingClientRect();
-    W = Math.max(280, Math.min(460, rect.width || 460));
+    W = Math.max(280, Math.min(560, rect.width || 560));
     H = W;
     DPR = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = W * DPR; canvas.height = H * DPR;
     canvas.style.height = H + 'px';
-    R = W * 0.40;
+    R = W * 0.42;
 
     glyphs = [];
     var BANDS = 12, seq = 0;
@@ -1845,14 +1857,14 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matc
   // punto de salida (un sitio al azar del frente de la esfera).
   function buildWord(){
     var word = WORDS[wordIdx];
-    var size = R * 0.44;
+    var size = R * 0.52;
     ctx.font = '800 ' + size + 'px Archivo,sans-serif';
     var widths = [], total = 0, i, w2;
     for(i = 0; i < word.length; i++){
       w2 = ctx.measureText(word[i]).width;
       widths.push(w2); total += w2;
     }
-    var maxW = R * 1.72;
+    var maxW = R * 1.80;
     if(total > maxW){
       var esc = maxW / total;
       size *= esc; total = maxW;
@@ -1923,6 +1935,24 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matc
       ctx.font = '800 ' + (L.size * sc).toFixed(1) + 'px Archivo,sans-serif';
       ctx.fillText(L.ch, px, py);
       ctx.shadowBlur = 0;
+    }
+
+    // ── la etiqueta chica bajo el nombre ──
+    if(letters.length){
+      var wa = phase === 'hold' ? 1
+             : phase === 'assemble' ? easeOut(Math.min(1, phT * 1.15))
+             : 1 - easeIn(phT);
+      if(wa > 0.02){
+        var sub = subFor(word);
+        if(sub){
+          ctx.globalAlpha = wa * 0.85;
+          ctx.fillStyle = '#8FE8F6';
+          if('letterSpacing' in ctx) ctx.letterSpacing = '4px';
+          ctx.font = '600 ' + (R * 0.105).toFixed(1) + 'px Archivo,sans-serif';
+          ctx.fillText(sub.toUpperCase(), W / 2, H / 2 + letters[0].size * 0.78);
+          if('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+        }
+      }
     }
     ctx.globalAlpha = 1;
   }
