@@ -392,6 +392,16 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
  .feat-grid{grid-template-columns:1fr}
 }
 @media(max-width:640px){.foot-grid{grid-template-columns:1fr}.section{padding:60px 16px}}
+
+/* ── Globo de letras (pie de Productos) ─────────────────────────────
+   Esfera tejida con las letras de la marca, girando en canvas.
+   Cada pasada del cursor arma la siguiente palabra:
+   AlphaCore → EchoCore → VoiceCore → ChatCore.               */
+.wg-wrap{margin:70px auto 0;max-width:560px;text-align:center;position:relative}
+.wg-wrap canvas{width:100%;height:auto;display:block;cursor:pointer;margin:0 auto}
+.wg-word{font-weight:800;font-size:clamp(21px,3vw,30px);letter-spacing:.4px;color:var(--text);margin-top:-6px;transition:opacity .3s ease}
+.wg-word.fade{opacity:0}
+.wg-hint{font-size:10.5px;letter-spacing:2.4px;text-transform:uppercase;color:var(--text5);margin-top:7px}
 </style>
 </head>
 <body>
@@ -568,6 +578,12 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
         <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Automatic confirmations and reminders">Automatic confirmations and reminders</span></li>
       </ul>
     </article>
+  </div>
+
+  <div class="wg-wrap" id="wgWrap">
+    <canvas id="wgCanvas" aria-hidden="true"></canvas>
+    <p class="wg-word" id="wgWord">AlphaCore</p>
+    <p class="wg-hint" data-i18n="Hover to switch">Hover to switch</p>
   </div>
 </section>
 
@@ -917,6 +933,7 @@ var DICT = {
   'Contact us':'Contactar','biz-desc':'Para negocios con múltiples ubicaciones o flujo intenso de clientes.',
   'Everything in Pro':'Todo lo de Pro','Custom volume, set in your agreement':'Volumen a la medida, definido en tu contrato','Multiple locations/branches':'Múltiples ubicaciones/sucursales',
   'overage-headline':'Si te pasas de tus minutos seguimos contestando — nunca cortamos tu servicio.',
+  'Hover to switch':'Pasa el cursor para cambiar',
   'overage-note':'Los minutos extra se cobran a $0.25/min y puedes ver tu consumo cuando quieras en tu portal de cliente. Costo de instalación $75–$100 según el plan.',
   'Custom integrations':'Integraciones a la medida','Priority support':'Soporte prioritario','Talk to sales':'Hablar con ventas',
   'Add-ons':'Complementos',
@@ -1800,6 +1817,151 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matc
   });
 }
 
+})();
+
+/* ══ Globo de letras ══════════════════════════════════════════════════
+   Esfera de puntos-letra en bandas de latitud; cada banda repite la
+   palabra actual alrededor de su circunferencia con un giro helicoidal.
+   Sin librerías: proyección manual + requestAnimationFrame.
+   - pointerenter / tap → siguiente palabra (con barrido de letras)
+   - se pausa fuera de pantalla (IntersectionObserver)
+   - prefers-reduced-motion → sin giro (cuadro estático, palabra sí cambia) */
+(function(){
+  var wrap = document.getElementById('wgWrap');
+  var canvas = document.getElementById('wgCanvas');
+  var caption = document.getElementById('wgWord');
+  if(!wrap || !canvas) return;
+
+  var WORDS = ['AlphaCore','EchoCore','VoiceCore','ChatCore'];
+  var CYAN = '#22D3EE', BRIGHT = '#9BEDF9';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ctx = canvas.getContext('2d');
+
+  var wordIdx = 0, prevIdx = 0;
+  var swapT = 1;                 // 1 = transición terminada
+  var glyphs = [];               // {th, ph, seq, rnd}
+  var W = 0, H = 0, R = 0, DPR = 1;
+  var visible = false, raf = 0, last = 0, angle = 0;
+  var lastSwap = 0;
+
+  function build(){
+    var rect = wrap.getBoundingClientRect();
+    W = Math.max(260, Math.min(560, rect.width));
+    H = Math.round(W * 0.82);
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = W * DPR; canvas.height = H * DPR;
+    canvas.style.height = H + 'px';
+    R = W * 0.335;
+
+    glyphs = [];
+    var BANDS = 13, seq = 0;
+    for(var b = 0; b < BANDS; b++){
+      // latitud: evita amontonar letras en los polos
+      var th = Math.PI * (0.14 + 0.72 * (b / (BANDS - 1)));
+      var circ = Math.sin(th);
+      var count = Math.max(4, Math.round(26 * circ));
+      var twist = b * 0.42;      // corrimiento helicoidal por banda
+      for(var c2 = 0; c2 < count; c2++){
+        glyphs.push({
+          th: th,
+          ph: twist + (c2 / count) * Math.PI * 2,
+          seq: seq++,
+          rnd: Math.random()     // orden del barrido al cambiar de palabra
+        });
+      }
+    }
+  }
+
+  function draw(){
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    var cx = W / 2, cy = H / 2, f = R * 2.6;
+    var wNew = WORDS[wordIdx], wOld = WORDS[prevIdx];
+    var base = Math.max(10, R * 0.075);
+    // pintar de atrás hacia adelante
+    var pts = [];
+    for(var i = 0; i < glyphs.length; i++){
+      var g = glyphs[i];
+      var st = Math.sin(g.th), phi = g.ph + angle;
+      var x = R * st * Math.cos(phi);
+      var z = R * st * Math.sin(phi);
+      var y = R * Math.cos(g.th);
+      pts.push({x:x, y:y, z:z, g:g});
+    }
+    pts.sort(function(a, b2){ return a.z - b2.z; });
+    for(var j = 0; j < pts.length; j++){
+      var p = pts[j], gg = p.g;
+      var word = (gg.rnd < swapT) ? wNew : wOld;
+      var ch = word[gg.seq % word.length];
+      var k = f / (f + p.z);                    // perspectiva
+      var depth = (p.z / R + 1) / 2;            // 0 atrás … 1 al frente
+      ctx.globalAlpha = 0.10 + 0.72 * depth;
+      ctx.fillStyle = depth > 0.9 ? BRIGHT : CYAN;
+      ctx.font = '600 ' + (base * (0.55 + 0.6 * depth)).toFixed(1) + "px 'Archivo',sans-serif";
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(ch, cx + p.x * k, cy + p.y * k);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function tick(now){
+    raf = 0;
+    if(!visible) return;
+    var dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if(!reduced) angle -= dt * 0.42;            // giro antihorario, sereno
+    if(swapT < 1) swapT = Math.min(1, swapT + dt / 0.7);
+    draw();
+    if(!reduced || swapT < 1) raf = requestAnimationFrame(tick);
+  }
+
+  function start(){
+    if(!raf){ last = performance.now(); raf = requestAnimationFrame(tick); }
+  }
+
+  function nextWord(){
+    var now = performance.now();
+    if(now - lastSwap < 900) return;            // sin metralleta de hovers
+    lastSwap = now;
+    prevIdx = wordIdx;
+    wordIdx = (wordIdx + 1) % WORDS.length;
+    swapT = 0;
+    // re-sortear el orden del barrido para que cada cambio se vea distinto
+    for(var i = 0; i < glyphs.length; i++) glyphs[i].rnd = Math.random();
+    caption.classList.add('fade');
+    setTimeout(function(){
+      caption.textContent = WORDS[wordIdx];
+      caption.classList.remove('fade');
+    }, 300);
+    start();
+  }
+
+  canvas.addEventListener('pointerenter', function(e){
+    if(e.pointerType === 'mouse') nextWord();
+  });
+  canvas.addEventListener('click', nextWord);
+
+  // ciclo solo también, para móvil y para quien no descubre el hover
+  setInterval(function(){
+    if(visible && performance.now() - lastSwap > 6500) nextWord();
+  }, 6600);
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      visible = entries[0].isIntersecting;
+      if(visible) start();
+    }, {threshold: 0.15}).observe(wrap);
+  } else { visible = true; start(); }
+
+  var rT;
+  window.addEventListener('resize', function(){
+    clearTimeout(rT);
+    rT = setTimeout(function(){ build(); draw(); }, 150);
+  });
+
+  build();
+  draw();
+  // el primer build puede correr antes de que el layout esté listo
+  window.addEventListener('load', function(){ build(); draw(); });
 })();
 </script>
 </body>
