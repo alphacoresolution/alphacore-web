@@ -349,7 +349,10 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 /* ── CURSOR ── */
 .cur-glow{position:fixed;left:0;top:0;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(6,182,212,.13),transparent 62%);pointer-events:none;z-index:9998;opacity:0;will-change:transform}
 .cur-ring{position:fixed;left:0;top:0;width:20px;height:20px;border:1.5px solid var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference;opacity:0;will-change:transform;transition:width .18s,height .18s,opacity .25s}
-@media(hover:hover) and (pointer:fine){body.cur-on{cursor:none}body.cur-on a,body.cur-on button,body.cur-on [data-click]{cursor:none}}
+@media(hover:hover) and (pointer:fine){body.cur-on,body.cur-on *{cursor:none!important}}
+/* cursor:none va en TODO: si solo cubre body/links, la flecha nativa reaparece
+   sobre inputs y sobre el canvas del globo (cursor:pointer propio) y se ven DOS
+   cursores a la vez — el 'cursor desincronizado' reportado el 19-ago. */
 
 /* ── MARQUEE ── */
 .marquee{overflow:hidden;border-top:1px solid var(--bcyan);border-bottom:1px solid var(--bcyan);background:linear-gradient(180deg,rgba(3,10,20,.5),rgba(5,15,30,.5));padding:20px 0;white-space:nowrap}
@@ -1312,18 +1315,22 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matc
   document.body.classList.add('cur-on');
   var ring = document.getElementById('curRing');
   var glow = document.getElementById('curGlow');
-  var tx=0, ty=0, gx=0, gy=0, started=false;
+  var tx=0, ty=0, gx=0, gy=0, started=false, overSize='20px';
+  // El evento solo ANOTA la posición; el movimiento se pinta en el rAF de abajo.
+  // Escribir estilos dentro del mousemove (que dispara cientos de veces/seg con
+  // mouse de gaming) forzaba trabajo extra justo cuando la página anda ocupada
+  // con los canvas — y el anillo se quedaba atrás del cursor real.
   window.addEventListener('mousemove', function(e){
     tx = e.clientX; ty = e.clientY;
-    if(!started){ started=true; gx=tx; gy=ty; }
-    ring.style.transform = 'translate('+tx+'px,'+ty+'px) translate(-50%,-50%)';
-    ring.style.opacity = '1'; glow.style.opacity = '1';
-    var over = e.target.closest && e.target.closest('a,button,input,textarea,label');
-    ring.style.width = over ? '46px' : '20px';
-    ring.style.height = over ? '46px' : '20px';
+    if(!started){ started=true; gx=tx; gy=ty; ring.style.opacity='1'; glow.style.opacity='1'; }
+    var over = e.target.closest && e.target.closest('a,button,input,textarea,label,canvas');
+    overSize = over ? '46px' : '20px';
   }, {passive:true});
-  document.addEventListener('mouseleave', function(){ ring.style.opacity='0'; glow.style.opacity='0'; });
+  document.addEventListener('mouseleave', function(){ ring.style.opacity='0'; glow.style.opacity='0'; started=false; });
+  document.addEventListener('mouseenter', function(){ if(tx||ty){ ring.style.opacity='1'; glow.style.opacity='1'; } });
   (function ease(){
+    ring.style.transform = 'translate('+tx+'px,'+ty+'px) translate(-50%,-50%)';
+    if(ring.style.width !== overSize){ ring.style.width = overSize; ring.style.height = overSize; }
     gx += (tx-gx)*.14; gy += (ty-gy)*.14;
     glow.style.transform = 'translate('+gx+'px,'+gy+'px) translate(-50%,-50%)';
     requestAnimationFrame(ease);
