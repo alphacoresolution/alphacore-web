@@ -393,15 +393,12 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 }
 @media(max-width:640px){.foot-grid{grid-template-columns:1fr}.section{padding:60px 16px}}
 
-/* ── Globo de letras (pie de Productos) ─────────────────────────────
-   Esfera tejida con las letras de la marca, girando en canvas.
-   Cada pasada del cursor arma la siguiente palabra:
-   AlphaCore → EchoCore → VoiceCore → ChatCore.               */
-.wg-wrap{margin:70px auto 0;max-width:560px;text-align:center;position:relative}
-.wg-wrap canvas{width:100%;height:auto;display:block;cursor:pointer;margin:0 auto}
-.wg-word{font-weight:800;font-size:clamp(21px,3vw,30px);letter-spacing:.4px;color:var(--text);margin-top:-6px;transition:opacity .3s ease}
-.wg-word.fade{opacity:0}
-.wg-hint{font-size:10.5px;letter-spacing:2.4px;text-transform:uppercase;color:var(--text5);margin-top:7px}
+/* ── Globo de letras (hero) ─────────────────────────────────────────
+   Esfera tejida con letras; adentro se arma el nombre de cada marca:
+   AlphaCore → EchoCore → VoiceCore → ChatCore.                    */
+.hero-globe{display:flex;align-items:center;justify-content:center;min-height:430px}
+.hero-globe canvas{width:100%;max-width:460px;height:auto;display:block;cursor:pointer}
+@media(max-width:960px){.hero-globe{min-height:0}}
 </style>
 </head>
 <body>
@@ -475,34 +472,9 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
       </div>
     </div>
 
-    <!-- 3 floating mini-simulators -->
-    <div class="hero-floats">
-      <!-- EchoCore -->
-      <div class="fcard fc-echo">
-        <div class="fcard-h"><span class="fcard-dot"></span><span class="fcard-lbl" data-i18n="EchoCore · personal assistant">EchoCore · personal assistant</span><span class="fcard-time">24/7</span></div>
-        <div class="fcard-body">
-          <div class="frow"><span class="ficon ficon-r"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></span><span class="flbl">Spam</span><span class="fbadge fbadge-r" data-i18n="Blocked">Blocked</span></div>
-          <div class="frow"><span class="ficon ficon-c"><svg width="11" height="11" viewBox="0 0 24 24" fill="#22D3EE"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg></span><span class="flbl" data-i18n="Juan — client">Juan — client</span><span class="fbadge fbadge-c" data-i18n="Connecting">Connecting</span></div>
-          <div class="frow"><span class="ficon ficon-c"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span><span class="flbl" data-i18n="Tue 10:30 am">Tue 10:30 am</span><span class="fbadge fbadge-c" data-i18n="Booked">Booked</span></div>
-          <div class="frow"><span class="ficon ficon-c"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="flbl" data-i18n="Summary sent to you">Summary sent to you</span><span class="fbadge fbadge-c" style="color:#67E8F9">SMS</span></div>
-          <div class="fnote" data-i18n="Your personal number stays private.">Your personal number stays private.</div>
-        </div>
-      </div>
-      <!-- VoiceCore -->
-      <div class="fcard fc-voice">
-        <div class="fcard-h"><span class="fcard-dot"></span><span class="fcard-lbl" data-i18n="VoiceCore · live call">VoiceCore · live call</span><span class="fcard-time" id="heroTimer">00:08</span></div>
-        <div class="fcard-body" id="heroChat" style="min-height:104px"></div>
-      </div>
-      <!-- ChatCore -->
-      <div class="fcard fc-chat">
-        <div class="fcard-h"><span class="fcard-dot"></span><span class="fcard-lbl" data-i18n="ChatCore · web chat">ChatCore · web chat</span><span class="fcard-time" data-i18n="online">online</span></div>
-        <div class="fcard-body">
-          <div class="chat-in" data-i18n="Hi, any tables for 4 today?">Hi, any tables for 4 today?</div>
-          <div class="chat-out" data-i18n="Yes — 7:00 or 8:30 pm.">Yes — 7:00 or 8:30 pm.</div>
-          <div class="chat-in" data-i18n="7 please">7 please</div>
-          <div class="chat-out" data-i18n="Booked ✅ Table for 4">Booked ✅ Table for 4</div>
-        </div>
-      </div>
+    <!-- Globo de letras: la esfera arma los nombres de las marcas -->
+    <div class="hero-floats hero-globe" id="wgWrap">
+      <canvas id="wgCanvas" aria-hidden="true"></canvas>
     </div>
   </div>
 </section>
@@ -580,11 +552,6 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
     </article>
   </div>
 
-  <div class="wg-wrap" id="wgWrap">
-    <canvas id="wgCanvas" aria-hidden="true"></canvas>
-    <p class="wg-word" id="wgWord">AlphaCore</p>
-    <p class="wg-hint" data-i18n="Hover to switch">Hover to switch</p>
-  </div>
 </section>
 
 <!-- ════════════════════ SERVICES ════════════════════ -->
@@ -933,7 +900,6 @@ var DICT = {
   'Contact us':'Contactar','biz-desc':'Para negocios con múltiples ubicaciones o flujo intenso de clientes.',
   'Everything in Pro':'Todo lo de Pro','Custom volume, set in your agreement':'Volumen a la medida, definido en tu contrato','Multiple locations/branches':'Múltiples ubicaciones/sucursales',
   'overage-headline':'Si te pasas de tus minutos seguimos contestando — nunca cortamos tu servicio.',
-  'Hover to switch':'Pasa el cursor para cambiar',
   'overage-note':'Los minutos extra se cobran a $0.25/min y puedes ver tu consumo cuando quieras en tu portal de cliente. Costo de instalación $75–$100 según el plan.',
   'Custom integrations':'Integraciones a la medida','Priority support':'Soporte prioritario','Talk to sales':'Hablar con ventas',
   'Add-ons':'Complementos',
@@ -1115,6 +1081,7 @@ var chatStep = 0, heroSec = 8;
 function getScript(){ return LANG === 'es' ? SCRIPT_ES : SCRIPT_EN; }
 function renderChat(){
   var box = document.getElementById('heroChat');
+  if(!box) return; // las tarjetas del hero se sustituyeron por el globo (19-ago)
   var script = getScript();
   box.innerHTML = '';
   script.forEach(function(m, i){
@@ -1136,12 +1103,15 @@ function chatLoop(){
   });
   setTimeout(chatLoop, 700 + script.length*900 + 3200);
 }
-if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+/* Las mini-tarjetas del hero se sustituyeron por el globo de letras (19-ago).
+   El simulador queda por si algun dia vuelven - solo corre si existen. */
+if(document.getElementById('heroChat') && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
   chatLoop();
   setInterval(function(){
     heroSec++;
     var m = Math.floor(heroSec/60), s = heroSec%60;
-    document.getElementById('heroTimer').textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+    var t = document.getElementById('heroTimer');
+    if(t) t.textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
   }, 1000);
 }
 
@@ -1819,56 +1789,87 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matc
 
 })();
 
-/* ══ Globo de letras ══════════════════════════════════════════════════
-   Esfera de puntos-letra en bandas de latitud; cada banda repite la
-   palabra actual alrededor de su circunferencia con un giro helicoidal.
-   Sin librerías: proyección manual + requestAnimationFrame.
-   - pointerenter / tap → siguiente palabra (con barrido de letras)
-   - se pausa fuera de pantalla (IntersectionObserver)
-   - prefers-reduced-motion → sin giro (cuadro estático, palabra sí cambia) */
+/* ══ Globo de letras (hero) ═══════════════════════════════════════════
+   Dos capas en un canvas:
+   1) La esfera: bandas de latitud tejidas con letras tenues, girando.
+   2) El nombre: las letras de la marca en turno VUELAN desde la
+      superficie de la esfera hasta armarse legibles en el centro,
+      sostienen, y se dispersan hacia el siguiente nombre.
+   Sin librerías. Se pausa fuera de pantalla; con prefers-reduced-motion
+   no hay vuelo ni giro (el nombre aparece ya armado y solo cambia). */
 (function(){
   var wrap = document.getElementById('wgWrap');
   var canvas = document.getElementById('wgCanvas');
-  var caption = document.getElementById('wgWord');
   if(!wrap || !canvas) return;
 
   var WORDS = ['AlphaCore','EchoCore','VoiceCore','ChatCore'];
-  var CYAN = '#22D3EE', BRIGHT = '#9BEDF9';
+  var CYAN = '#22D3EE', WHITE = '#F2FDFF';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ctx = canvas.getContext('2d');
 
-  var wordIdx = 0, prevIdx = 0;
-  var swapT = 1;                 // 1 = transición terminada
-  var glyphs = [];               // {th, ph, seq, rnd}
   var W = 0, H = 0, R = 0, DPR = 1;
-  var visible = false, raf = 0, last = 0, angle = 0;
-  var lastSwap = 0;
+  var glyphs = [];               // letras de la esfera
+  var letters = [];              // letras del nombre en formación
+  var wordIdx = 0;
+  var phase = 'assemble';        // assemble → hold → disperse
+  var phT = 0;                   // progreso 0..1 de la fase
+  var ASSEMBLE_S = 0.85, HOLD_S = 2.8, DISPERSE_S = 0.5;
+  var visible = false, raf = 0, last = 0, angle = 0, lastSkip = 0;
+
+  function easeOut(t){ return 1 - Math.pow(1 - t, 3); }
+  function easeIn(t){ return t * t * t; }
 
   function build(){
     var rect = wrap.getBoundingClientRect();
-    W = Math.max(260, Math.min(560, rect.width));
-    H = Math.round(W * 0.82);
+    W = Math.max(280, Math.min(460, rect.width || 460));
+    H = W;
     DPR = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = W * DPR; canvas.height = H * DPR;
     canvas.style.height = H + 'px';
-    R = W * 0.335;
+    R = W * 0.40;
 
     glyphs = [];
-    var BANDS = 13, seq = 0;
+    var BANDS = 12, seq = 0;
     for(var b = 0; b < BANDS; b++){
-      // latitud: evita amontonar letras en los polos
-      var th = Math.PI * (0.14 + 0.72 * (b / (BANDS - 1)));
-      var circ = Math.sin(th);
-      var count = Math.max(4, Math.round(26 * circ));
-      var twist = b * 0.42;      // corrimiento helicoidal por banda
+      // latitud: sin amontonar letras en los polos
+      var th = Math.PI * (0.13 + 0.74 * (b / (BANDS - 1)));
+      var count = Math.max(4, Math.round(24 * Math.sin(th)));
       for(var c2 = 0; c2 < count; c2++){
-        glyphs.push({
-          th: th,
-          ph: twist + (c2 / count) * Math.PI * 2,
-          seq: seq++,
-          rnd: Math.random()     // orden del barrido al cambiar de palabra
-        });
+        glyphs.push({ th: th, ph: b * 0.42 + (c2 / count) * Math.PI * 2, seq: seq++ });
       }
+    }
+    buildWord();
+  }
+
+  // Prepara las letras del nombre actual: su lugar final (centrado) y su
+  // punto de salida (un sitio al azar del frente de la esfera).
+  function buildWord(){
+    var word = WORDS[wordIdx];
+    var size = R * 0.44;
+    ctx.font = '800 ' + size + 'px Archivo,sans-serif';
+    var widths = [], total = 0, i, w2;
+    for(i = 0; i < word.length; i++){
+      w2 = ctx.measureText(word[i]).width;
+      widths.push(w2); total += w2;
+    }
+    var maxW = R * 1.72;
+    if(total > maxW){
+      var esc = maxW / total;
+      size *= esc; total = maxW;
+      for(i = 0; i < widths.length; i++) widths[i] *= esc;
+    }
+    letters = [];
+    var x = W / 2 - total / 2;
+    for(var j = 0; j < word.length; j++){
+      var a = Math.random() * Math.PI * 2, rr = R * (0.55 + Math.random() * 0.45);
+      letters.push({
+        ch: word[j],
+        tx: x + widths[j] / 2, ty: H / 2,
+        sx: W / 2 + Math.cos(a) * rr, sy: H / 2 + Math.sin(a) * rr,
+        delay: j * 0.06,
+        size: size
+      });
+      x += widths[j];
     }
   }
 
@@ -1876,80 +1877,98 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matc
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     ctx.clearRect(0, 0, W, H);
     var cx = W / 2, cy = H / 2, f = R * 2.6;
-    var wNew = WORDS[wordIdx], wOld = WORDS[prevIdx];
-    var base = Math.max(10, R * 0.075);
-    // pintar de atrás hacia adelante
+    var word = WORDS[wordIdx];
+
+    // ── capa 1: la esfera, tenue para que el nombre respire ──
     var pts = [];
     for(var i = 0; i < glyphs.length; i++){
       var g = glyphs[i];
       var st = Math.sin(g.th), phi = g.ph + angle;
-      var x = R * st * Math.cos(phi);
-      var z = R * st * Math.sin(phi);
-      var y = R * Math.cos(g.th);
-      pts.push({x:x, y:y, z:z, g:g});
+      pts.push({ x: R * st * Math.cos(phi), y: R * Math.cos(g.th),
+                 z: R * st * Math.sin(phi), g: g });
     }
     pts.sort(function(a, b2){ return a.z - b2.z; });
+    var base = Math.max(9, R * 0.065);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     for(var j = 0; j < pts.length; j++){
-      var p = pts[j], gg = p.g;
-      var word = (gg.rnd < swapT) ? wNew : wOld;
-      var ch = word[gg.seq % word.length];
-      var k = f / (f + p.z);                    // perspectiva
-      var depth = (p.z / R + 1) / 2;            // 0 atrás … 1 al frente
-      ctx.globalAlpha = 0.10 + 0.72 * depth;
-      ctx.fillStyle = depth > 0.9 ? BRIGHT : CYAN;
-      ctx.font = '600 ' + (base * (0.55 + 0.6 * depth)).toFixed(1) + "px 'Archivo',sans-serif";
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText(ch, cx + p.x * k, cy + p.y * k);
+      var p = pts[j];
+      var k = f / (f + p.z);
+      var depth = (p.z / R + 1) / 2;
+      ctx.globalAlpha = 0.05 + 0.30 * depth;
+      ctx.fillStyle = CYAN;
+      ctx.font = '600 ' + (base * (0.55 + 0.55 * depth)).toFixed(1) + 'px Archivo,sans-serif';
+      ctx.fillText(word[p.g.seq % word.length], cx + p.x * k, cy + p.y * k);
+    }
+
+    // ── capa 2: el nombre armándose adentro ──
+    for(var n = 0; n < letters.length; n++){
+      var L = letters[n], px, py, al, sc;
+      if(phase === 'assemble'){
+        var t = reduced ? 1 : Math.max(0, Math.min(1, (phT * (ASSEMBLE_S + 0.4) - L.delay) / ASSEMBLE_S));
+        var e = easeOut(t);
+        px = L.sx + (L.tx - L.sx) * e; py = L.sy + (L.ty - L.sy) * e;
+        al = e; sc = 0.55 + 0.45 * e;
+      } else if(phase === 'hold'){
+        px = L.tx; py = L.ty; al = 1; sc = 1;
+      } else { // disperse
+        var t2 = reduced ? 1 : easeIn(phT);
+        px = L.tx + (L.sx - L.tx) * t2; py = L.ty + (L.sy - L.ty) * t2;
+        al = 1 - t2; sc = 1 - 0.4 * t2;
+      }
+      if(al <= 0.01) continue;
+      ctx.globalAlpha = al;
+      ctx.fillStyle = WHITE;
+      ctx.shadowColor = 'rgba(34,211,238,.85)';
+      ctx.shadowBlur = 16 * al;
+      ctx.font = '800 ' + (L.size * sc).toFixed(1) + 'px Archivo,sans-serif';
+      ctx.fillText(L.ch, px, py);
+      ctx.shadowBlur = 0;
     }
     ctx.globalAlpha = 1;
+  }
+
+  function advancePhase(dt){
+    var dur = phase === 'assemble' ? (ASSEMBLE_S + 0.4)
+            : phase === 'hold' ? HOLD_S : DISPERSE_S;
+    phT += dt / dur;
+    if(phT < 1) return;
+    phT = 0;
+    if(phase === 'assemble') phase = 'hold';
+    else if(phase === 'hold') phase = 'disperse';
+    else {
+      wordIdx = (wordIdx + 1) % WORDS.length;
+      buildWord();
+      phase = 'assemble';
+    }
   }
 
   function tick(now){
     raf = 0;
     if(!visible) return;
     var dt = Math.min(0.05, (now - last) / 1000); last = now;
-    if(!reduced) angle -= dt * 0.42;            // giro antihorario, sereno
-    if(swapT < 1) swapT = Math.min(1, swapT + dt / 0.7);
+    if(!reduced) angle -= dt * 0.32;
+    advancePhase(dt);
     draw();
-    if(!reduced || swapT < 1) raf = requestAnimationFrame(tick);
+    raf = requestAnimationFrame(tick);
   }
 
-  function start(){
-    if(!raf){ last = performance.now(); raf = requestAnimationFrame(tick); }
-  }
+  function start(){ if(!raf){ last = performance.now(); raf = requestAnimationFrame(tick); } }
 
-  function nextWord(){
+  // pasar el cursor (o tocar) salta al siguiente nombre
+  function skip(){
     var now = performance.now();
-    if(now - lastSwap < 900) return;            // sin metralleta de hovers
-    lastSwap = now;
-    prevIdx = wordIdx;
-    wordIdx = (wordIdx + 1) % WORDS.length;
-    swapT = 0;
-    // re-sortear el orden del barrido para que cada cambio se vea distinto
-    for(var i = 0; i < glyphs.length; i++) glyphs[i].rnd = Math.random();
-    caption.classList.add('fade');
-    setTimeout(function(){
-      caption.textContent = WORDS[wordIdx];
-      caption.classList.remove('fade');
-    }, 300);
-    start();
+    if(now - lastSkip < 900) return;
+    lastSkip = now;
+    if(phase !== 'disperse'){ phase = 'disperse'; phT = 0; }
   }
-
-  canvas.addEventListener('pointerenter', function(e){
-    if(e.pointerType === 'mouse') nextWord();
-  });
-  canvas.addEventListener('click', nextWord);
-
-  // ciclo solo también, para móvil y para quien no descubre el hover
-  setInterval(function(){
-    if(visible && performance.now() - lastSwap > 6500) nextWord();
-  }, 6600);
+  canvas.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse') skip(); });
+  canvas.addEventListener('click', skip);
 
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(entries){
       visible = entries[0].isIntersecting;
       if(visible) start();
-    }, {threshold: 0.15}).observe(wrap);
+    }, {threshold: 0.1}).observe(wrap);
   } else { visible = true; start(); }
 
   var rT;
@@ -1960,7 +1979,6 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matc
 
   build();
   draw();
-  // el primer build puede correr antes de que el layout esté listo
   window.addEventListener('load', function(){ build(); draw(); });
 })();
 </script>
