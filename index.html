@@ -56,7 +56,7 @@
     "name": "United States"
   },
   "knowsLanguage": ["en", "es"],
-  "priceRange": "$129 - $199 /mo",
+  "priceRange": "$149 - $199 /mo",
   "sameAs": [],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -237,7 +237,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 .ptoggle{display:flex;width:max-content;margin-inline:auto;align-items:center;gap:4px;background:rgba(10,18,32,.6);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:4px;margin-bottom:44px}
 .ptoggle button{background:none;color:var(--text3);font-weight:600;font-size:14px;padding:9px 18px;border:none;border-radius:9px;cursor:pointer;font-family:inherit;transition:background .2s,color .2s}
 .ptoggle button.active{background:var(--cyan5);color:var(--bg);font-weight:700}
-.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:start}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
 .pcard{padding:34px 22px;text-align:center;overflow:visible}
 .pcard>div:first-of-type{justify-content:center!important}
 .pcard-feat{background:linear-gradient(165deg,rgba(13,26,38,.7),rgba(8,19,32,.7));border-color:rgba(34,211,238,.4);box-shadow:0 20px 60px rgba(6,182,212,.13)}
@@ -609,26 +609,12 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
   </div>
   <div class="pgrid" data-stagger>
     <article class="card pcard">
-      <p class="plabel">EchoCore</p>
-      <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px"><span class="pprice" id="echoPrice">$129</span><span class="pper">/mo</span></div>
-      <p class="pdsc" data-i18n="echo-plan-desc">For one person who lives on the phone and can't keep missing calls.</p>
-      <ul class="pfeats">
-        <li><span class="pcheck">✓</span><span data-i18n="550 minutes per month">550 minutes per month</span></li>
-        <li><span class="pcheck">✓</span><span data-i18n="EchoCore personal assistant">EchoCore personal assistant</span></li>
-        <li><span class="pcheck">✓</span><span data-i18n="English + Spanish">English + Spanish</span></li>
-        <li><span class="pcheck">✓</span><span data-i18n="Dedicated number included">Dedicated number included</span></li>
-        <li><span class="pcheck">✓</span><span data-i18n="Booking in Google Calendar">Booking in Google Calendar</span></li>
-        <li><span class="pcheck">✓</span><span data-i18n="Spam blocking and SMS summaries">Spam blocking and SMS summaries</span></li>
-      </ul>
-      <a href="#contacto" class="pbtn pbtn-o" data-i18n="Get started">Get started</a>
-    </article>
-    <article class="card pcard">
       <p class="plabel">Starter</p>
       <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px"><span class="pprice" id="starterPrice">$149</span><span class="pper">/mo</span></div>
       <p class="pdsc" data-i18n="starter-desc">For businesses starting out that want to stop losing calls today.</p>
       <ul class="pfeats">
         <li><span class="pcheck">✓</span><span data-i18n="750 minutes per month">750 minutes per month</span></li>
-        <li><span class="pcheck">✓</span><span data-i18n="EchoCore or VoiceCore or ChatCore (one)">EchoCore or VoiceCore or ChatCore (one)</span></li>
+        <li><span class="pcheck">✓</span><span data-i18n="Your voice assistant — EchoCore or VoiceCore">Your voice assistant — EchoCore or VoiceCore</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="English + Spanish">English + Spanish</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="Business number included">Business number included</span></li>
         <li><span class="pcheck">✓</span><span data-i18n="Booking in Google Calendar">Booking in Google Calendar</span></li>
@@ -668,7 +654,8 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
     <div style="flex:1;min-width:260px">
       <p class="plabel" style="margin-bottom:6px" data-i18n="Add-ons">Add-ons</p>
       <p style="font-weight:700;font-size:17px;margin-bottom:4px;color:#fff" data-i18n="addon-rest-title">Have a restaurant? Add phone order-taking.</p>
-      <p class="pdsc" style="margin:0" data-i18n="addon-rest-desc">Sofia takes the complete order over the phone — exact totals, tax included — and sends it straight to your kitchen screen. +$50/mo on the Pro plan. More add-ons available: just ask.</p>
+      <p class="pdsc" style="margin:0 0 6px" data-i18n="addon-rest-desc">Sofia takes the complete order over the phone — exact totals, tax included — and sends it straight to your kitchen screen. +$50/mo on the Pro plan. More add-ons available: just ask.</p>
+      <p class="pdsc" style="margin:0" data-i18n="addon-chat-only">Only need text messages, no calls? Ask us — we have a plan for that too.</p>
     </div>
     <a href="#contacto" class="pbtn pbtn-o" style="flex:0 0 auto" data-i18n="Talk to sales">Talk to sales</a>
   </div>
@@ -892,6 +879,8 @@ var DICT = {
   'Dedicated number included':'Número propio incluido',
   'Spam blocking and SMS summaries':'Bloqueo de spam y resúmenes por SMS',
   'starter-desc':'Para negocios que empiezan y quieren dejar de perder llamadas hoy.',
+  'Your voice assistant — EchoCore or VoiceCore':'Tu asistente de voz — EchoCore o VoiceCore',
+  'addon-chat-only':'¿Solo necesitas mensajes de texto, sin llamadas? Pregúntanos — también tenemos un plan para eso.',
   'EchoCore or VoiceCore or ChatCore (one)':'EchoCore o VoiceCore o ChatCore (uno)',
   '750 minutes per month':'750 minutos al mes',
   'English + Spanish':'Español + inglés','Business number included':'Número de negocio incluido','Get started':'Empezar ahora',
@@ -1012,7 +1001,6 @@ var annual = false;
 var btnM = document.getElementById('btnMonthly');
 var btnA = document.getElementById('btnAnnual');
 function updatePricing(){
-  document.getElementById('echoPrice').textContent = annual ? '$103' : '$129';
   document.getElementById('starterPrice').textContent = annual ? '$119' : '$149';
   document.getElementById('proPrice').textContent = annual ? '$159' : '$199';
   btnM.classList.toggle('active', !annual);

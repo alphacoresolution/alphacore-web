@@ -87,9 +87,15 @@ Si el servidor falla, **caen a `mailto:` como respaldo** — no es un bug, es el
 ## Pricing actual (verificado en el HTML — subida de precios 17-ago-2026)
 | Plan | Mensual | Anual |
 |---|---|---|
-| EchoCore | $129/mes | $103/mes |
-| Starter | $149/mes | $119/mes |
-| Pro | $199/mes | $159/mes |
+| Starter (un asistente de voz) | $149/mes | $119/mes |
+| Pro (voz + ChatCore) | $199/mes | $159/mes |
+| Business | Cotizar | Cotizar |
+
+**Precio oculto (19-ago-2026):** ChatCore solo = **$129/mes — NO se publica en el
+sitio.** Es precio de cierre, se ofrece de palabra cuando el prospecto solo
+quiere mensajes. La tarjeta EchoCore $129 se eliminó ese mismo día (EchoCore se
+vende como la opción "persona" dentro del Starter). En la franja de add-ons hay
+una línea que invita a preguntar por "solo mensajes".
 | Business | Contactar | Contactar |
 
 - **Add-on pedidos restaurante: +$50/mes sobre Pro** (franja "Add-ons" bajo las tarjetas de precios)
