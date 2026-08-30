@@ -75,7 +75,7 @@
         "itemOffered": {
           "@type": "Service",
           "name": "ChatCore",
-          "description": "AI assistant for WhatsApp and SMS that replies to customers, shares prices and books appointments automatically."
+          "description": "AI assistant for SMS that replies to customers, shares prices and books appointments automatically."
         }
       },
       {
@@ -591,8 +591,8 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
     <h2 class="stitle" data-i18n="From zero to your AI receptionist the same day.">From zero to your AI receptionist the same day.</h2>
     <p class="ssub" data-i18n="steps-sub">No code, no hassle, 100% bilingual. Three steps and your business never loses a customer again.</p>
     <div class="steps" data-stagger>
-      <div class="card" style="padding:30px"><div class="step-n">01</div><h3 class="step-t" data-i18n="We talk with you">We talk with you</h3><p class="step-d" data-i18n="step1-desc">30 minutes by phone or WhatsApp. We learn your business, services, hours, and way of speaking.</p><span class="step-b" data-i18n="Day 1 · 30 min">Day 1 · 30 min</span></div>
-      <div class="card" style="padding:30px"><div class="step-n">02</div><h3 class="step-t" data-i18n="We train your AI">We train your AI</h3><p class="step-d" data-i18n="step2-desc">We set up VoiceCore and ChatCore with your brand, prices, and calendar. We connect WhatsApp, phone, and Google.</p><span class="step-b" data-i18n="Day 1–2 · hands-off">Day 1–2 · hands-off</span></div>
+      <div class="card" style="padding:30px"><div class="step-n">01</div><h3 class="step-t" data-i18n="We talk with you">We talk with you</h3><p class="step-d" data-i18n="step1-desc">30 minutes by phone or text. We learn your business, services, hours, and way of speaking.</p><span class="step-b" data-i18n="Day 1 · 30 min">Day 1 · 30 min</span></div>
+      <div class="card" style="padding:30px"><div class="step-n">02</div><h3 class="step-t" data-i18n="We train your AI">We train your AI</h3><p class="step-d" data-i18n="step2-desc">We set up VoiceCore and ChatCore with your brand, prices, and calendar. We connect your phone line, text messages, and Google.</p><span class="step-b" data-i18n="Day 1–2 · hands-off">Day 1–2 · hands-off</span></div>
       <div class="card" style="padding:30px"><div class="step-n">03</div><h3 class="step-t" data-i18n="You launch and relax">You launch and relax</h3><p class="step-d" data-i18n="step3-desc">Live tests, we show you the dashboard, and by day 3 your AI receptionist is answering every call and message.</p><span class="step-b" data-i18n="Day 3 · live">Day 3 · live</span></div>
     </div>
   </div>
@@ -777,7 +777,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
       <div class="foot-brand"><img src="logo.png" alt="AlphaCore Solutions"><p data-i18n="foot-brand">AI automation studio for every business. Made in Minneapolis, MN — for the rest of the country.</p></div>
       <div class="foot-col"><h4 data-i18n="Product">Product</h4><ul><li><a href="#productos">VoiceCore</a></li><li><a href="#productos">ChatCore</a></li><li><a href="#productos">EchoCore</a></li><li><a href="#precios" data-i18n="Pricing">Pricing</a></li></ul></div>
       <div class="foot-col"><h4 data-i18n="Company">Company</h4><ul><li><a href="#servicios" data-i18n="Services">Services</a></li><li><a href="#como" data-i18n="How it works">How it works</a></li><li><a href="#faq">FAQ</a></li><li><a href="#demo">Demo</a></li></ul></div>
-      <div class="foot-col"><h4 data-i18n="Contact">Contact</h4><ul><li><a href="tel:+16123244413">612-324-4413</a></li><li><a href="mailto:info@alphacoresolutions.co">info@alphacoresolutions.co</a></li><li><a href="https://wa.me/16123244413">WhatsApp</a></li><li><span>Minneapolis, Minnesota, USA</span></li></ul></div>
+      <div class="foot-col"><h4 data-i18n="Contact">Contact</h4><ul><li><a href="tel:+16123244413">612-324-4413</a></li><li><a href="mailto:info@alphacoresolutions.co">info@alphacoresolutions.co</a></li><li><span>Minneapolis, Minnesota, USA</span></li></ul></div>
     </div>
     <div class="foot-bot">
       <span>© 2026 AlphaCore Solutions · alphacoresolutions.co</span>
@@ -850,8 +850,8 @@ var DICT = {
   'From zero to your AI receptionist the same day.':'De cero a tu recepcionista AI el mismo día.',
   'steps-sub':'Sin código, sin complicaciones, 100% bilingüe. Tres pasos y tu negocio ya nunca pierde un cliente.',
   'We talk with you':'Hablamos contigo','We train your AI':'Entrenamos a tu AI','You launch and relax':'Lanzas y descansas',
-  'step1-desc':'30 minutos por teléfono o WhatsApp. Entendemos tu negocio, tus servicios, tus horarios, tu forma de hablar.',
-  'step2-desc':'Configuramos VoiceCore y ChatCore con tu marca, tus precios y tu calendario. Conectamos WhatsApp, teléfono y Google.',
+  'step1-desc':'30 minutos por teléfono o mensaje de texto. Entendemos tu negocio, tus servicios, tus horarios, tu forma de hablar.',
+  'step2-desc':'Configuramos VoiceCore y ChatCore con tu marca, tus precios y tu calendario. Conectamos tu línea, tus mensajes de texto y Google.',
   'step3-desc':'Pruebas en vivo, te enseñamos el panel y al día 3 tu recepcionista AI está respondiendo cada llamada y cada mensaje.',
   'Day 1 · 30 min':'Día 1 · 30 min','Day 1–2 · hands-off':'Día 1–2 · sin tocar nada','Day 3 · live':'Día 3 · en vivo',
   'A plan for every stage of your business.':'Un plan para cada etapa de tu negocio.',
@@ -950,7 +950,7 @@ var FAQS_EN = [
   ['Do I need to change my phone number?','No. We set up call forwarding from your current number to VoiceCore, without you changing anything. If you prefer, we can also give you a new dedicated number.'],
   ['What happens if the AI doesn\'t know how to answer something?','The AI is trained to recognize when it needs human help. In those cases it sends you the conversation by SMS immediately, or transfers the call to your cell phone, whichever you prefer.'],
   ['Is there a long-term contract?','No. You pay month to month and can cancel anytime with 30 days\' notice. We believe the product should earn your trust every month.'],
-  ['What tools does it integrate with?','Google Calendar, Google Workspace, WhatsApp Business, Stripe, Square, HubSpot, Mailchimp, Zapier, and more. If you use something not listed, the Business plan includes custom integrations.']
+  ['What tools does it integrate with?','Google Calendar, Google Workspace, Stripe, Square, HubSpot, Mailchimp, Zapier, and more. If you use something not listed, the Business plan includes custom integrations.']
 ];
 var FAQS_ES = [
   ['¿Cuánto tarda en estar funcionando?','El mismo día en la mayoría de los casos. Tenemos una llamada inicial de 30 minutos contigo, entrenamos tu asistente con la información de tu negocio, y ese mismo día está contestando llamadas y mensajes.'],
@@ -958,7 +958,7 @@ var FAQS_ES = [
   ['¿Necesito cambiar mi número de teléfono?','No. Configuramos un desvío de llamadas desde tu número actual hacia VoiceCore, sin que tengas que cambiar nada. Si prefieres, también podemos darte un número nuevo dedicado.'],
   ['¿Qué pasa si la AI no sabe responder algo?','La AI está entrenada para reconocer cuándo necesita ayuda humana. En esos casos te envía la conversación por SMS inmediatamente, o transfiere la llamada a tu celular según prefieras.'],
   ['¿Hay contrato a largo plazo?','No. Pagas mes a mes y puedes cancelar cuando quieras con 30 días de aviso. Creemos que el producto se debe ganar tu confianza cada mes.'],
-  ['¿Con qué herramientas se integra?','Google Calendar, Google Workspace, WhatsApp Business, Stripe, Square, HubSpot, Mailchimp, Zapier y más. Si usas algo que no está listado, en el plan Business hacemos integraciones a la medida.']
+  ['¿Con qué herramientas se integra?','Google Calendar, Google Workspace, Stripe, Square, HubSpot, Mailchimp, Zapier y más. Si usas algo que no está listado, en el plan Business hacemos integraciones a la medida.']
 ];
 var faqOpenIdx = -1;
 function buildFaq(){
