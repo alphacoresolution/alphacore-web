@@ -121,7 +121,7 @@ export async function onRequestPost({ request, env }) {
       body: JSON.stringify({
         from: env.CONTACT_FROM || DEFAULT_FROM,
         to: [env.CONTACT_TO || DEFAULT_TO],
-        subject: `Nuevo contacto: ${name}${biz ? ` — ${biz}` : ''}`,
+        subject: `Nuevo contacto: ${name}${biz ? ` — ${biz}` : ''}`.replace(/[\r\n]+/g, ' '),
         text,
         html,
         ...(isEmail ? { reply_to: contact } : {}),
