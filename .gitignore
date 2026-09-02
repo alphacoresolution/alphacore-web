@@ -1,7 +1,4 @@
-# Cloudflare Pages publica TODO lo que hay en el repo. Lo que no es parte del
-# sitio no debe ir al repo o queda en alphacoresolutions.co/<archivo> a la vista
-# de cualquiera (paso el 1-sep-2026: CLAUDE.md, con el precio de cierre interno,
-# se servía público).
-CLAUDE.md
-setup-surface.bat
-.claude/
+# Cloudflare Pages publica TODO lo que hay en el repo. Lo interno va aqui.
+# (1-sep-2026: CLAUDE.md con el precio de cierre se servia publico.)
+CLAUDE.local.md
+*.local.md
