@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AlphaCore Solutions · AI Automation Studio</title>
-<meta name="description" content="AI agents that answer calls, reply to messages, and book appointments — bilingual, 24/7. AlphaCore Solutions, Minneapolis MN.">
+<title>AI Receptionist for Contractors & Restaurants in Minneapolis | Bilingual | AlphaCore Solutions</title>
+<meta name="description" content="AI receptionist for contractors and restaurants in Minneapolis. Answers calls and texts in English and Spanish, 24/7, and books appointments. Installed in person, same day, by AlphaCore Solutions.">
 <link rel="canonical" href="https://alphacoresolutions.co/">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
@@ -16,8 +16,8 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AlphaCore Solutions">
 <meta property="og:url" content="https://alphacoresolutions.co/">
-<meta property="og:title" content="Contesta cada llamada. Agenda sola. 24/7.">
-<meta property="og:description" content="Recepcionista con inteligencia artificial para tu negocio. Contesta llamadas y mensajes en español e inglés, agenda citas y nunca deja a un cliente esperando. Minneapolis, MN.">
+<meta property="og:title" content="Recepcionista con IA para contratistas y restaurantes en Minneapolis">
+<meta property="og:description" content="Asistente virtual que contesta llamadas y mensajes en español e inglés, 24/7, y agenda citas. Instalado en persona el mismo día. AlphaCore Solutions, Minneapolis MN.">
 <meta property="og:image" content="https://alphacoresolutions.co/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -25,8 +25,8 @@
 <meta property="og:locale" content="es_US">
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Contesta cada llamada. Agenda sola. 24/7.">
-<meta name="twitter:description" content="Recepcionista con inteligencia artificial para tu negocio. Español e inglés, 24/7. Minneapolis, MN.">
+<meta name="twitter:title" content="Recepcionista con IA para contratistas y restaurantes en Minneapolis">
+<meta name="twitter:description" content="Contesta llamadas y mensajes en español e inglés, 24/7. Instalado en persona el mismo día. Minneapolis, MN.">
 <meta name="twitter:image" content="https://alphacoresolutions.co/og-image.png">
 
 <!-- Datos estructurados: le dicen a Google QUIÉN es la empresa, dónde está y
@@ -158,6 +158,10 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 .hero-desc{font-size:18px;line-height:1.78;color:var(--text3);max-width:540px;margin:0 0 42px}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:13px}
 .hero-trust{display:flex;flex-wrap:wrap;gap:12px 26px;margin-top:30px}
+/* Barra fija de llamada — SOLO movil (CTA #1: la demo en vivo). right:110px deja libre la esquina
+   donde el widget de ChatCore (widget.js) pone la mascota "cubo" (88px, right/bottom 12px). El padding-bottom del body evita que tape el footer. */
+.mob-call{display:none}
+@media(max-width:768px){.mob-call{display:flex;position:fixed;left:12px;right:110px;bottom:12px;z-index:60;align-items:center;justify-content:center;gap:8px;padding:14px 10px;border-radius:14px;background:var(--cyan5);color:var(--bg);font-weight:700;font-size:14px;white-space:nowrap;box-shadow:0 10px 34px rgba(6,182,212,.35)}.mob-call svg{flex-shrink:0}body{padding-bottom:80px}}
 .hero-trust span{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--text4)}
 .hero-trust span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px rgba(34,211,238,.8);flex-shrink:0}
 
@@ -456,6 +460,8 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
   </div>
 </header>
 
+<a href="tel:+16123244413" class="mob-call" id="mobCall"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg><span data-i18n="Call Sofia now — 612-324-4413">Call Sofia now — 612-324-4413</span></a>
+
 <!-- ════════════════════ HERO ════════════════════ -->
 <section id="top" class="hero">
   <div class="hero-bg" aria-hidden="true"><div></div><div></div></div>
@@ -463,9 +469,10 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
     <div>
       <p class="badge" style="margin-bottom:26px">AI Automation Studio · Minneapolis, MN</p>
       <h1><span data-i18n="Your AI receptionist and personal assistant that">Your AI receptionist and personal assistant that</span><br><span class="typing" id="typingText">answers calls</span><span class="caret"></span></h1>
-      <p class="hero-desc" data-i18n="hero-desc">AlphaCore Solutions is a Minnesota technology company specialized in AI agents that answer calls, reply to text messages, and book appointments — in English and Spanish, 24/7. Your business never rests, so you never lose a customer again.</p>
+      <p class="hero-desc" data-i18n="hero-desc">AlphaCore Solutions installs AI virtual assistants that answer calls, reply to text messages, and book appointments — in English and Spanish, 24/7. Installed in person, same day, in Minneapolis, so your business never loses a customer again.</p>
       <div class="hero-ctas">
-        <a href="#contacto" class="btn btn-p" data-i18n="Contact">Contact</a>
+        <a href="tel:+16123244413" class="btn btn-p" data-i18n="Call Sofia now — 612-324-4413">Call Sofia now — 612-324-4413</a>
+        <a href="#contacto" class="btn btn-o" data-i18n="Contact">Contact</a>
         <a href="#demo" class="btn btn-o" data-i18n="See live demo">See live demo</a>
       </div>
       <div class="hero-trust">
@@ -488,7 +495,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
     <div class="metric"><div class="metric-val" data-count="24" data-suf="/7">24/7</div><div class="metric-lbl" data-i18n="Always available">Always available</div></div>
     <div class="metric"><div class="metric-val" data-count="2" data-pre="<" data-suf="s" data-cyan>&lt;2<span style="color:var(--cyan)">s</span></div><div class="metric-lbl" data-i18n="Response time">Response time</div></div>
     <div class="metric"><div class="metric-val" data-count="100" data-suf="%">100%</div><div class="metric-lbl" data-i18n="Bilingual">Bilingual</div></div>
-    <div class="metric"><div class="metric-val" data-count="3" data-suf="x">3x</div><div class="metric-lbl" data-i18n="More appointments booked">More appointments booked</div></div>
+    <div class="metric"><div class="metric-val" data-i18n="Same day">Same day</div><div class="metric-lbl" data-i18n="Installed in person">Installed in person</div></div>
   </div>
 </section>
 
@@ -530,9 +537,9 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
       <p class="pdesc-sm" data-i18n="voice-desc">The receptionist for your business line. Answers every call in under 2 seconds with a natural voice — so no customer ever hits voicemail again.</p>
       <ul class="feat" style="position:relative;z-index:1">
         <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Natural voice in English and Spanish">Natural voice in English and Spanish</span></li>
-        <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Books, reschedules and cancels appointments">Books, reschedules and cancels appointments</span></li>
+        <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Books appointments in your Google Calendar">Books appointments in your Google Calendar</span></li>
         <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Takes messages and transfers calls">Takes messages and transfers calls</span></li>
-        <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Sends you a transcript by SMS">Sends you a transcript by SMS</span></li>
+        <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Texts you who called and why, mid-call — full transcript in your portal">Texts you who called and why, mid-call — full transcript in your portal</span></li>
         <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Takes restaurant orders with exact totals">Takes restaurant orders with exact totals</span></li>
       </ul>
     </article>
@@ -549,7 +556,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
       <ul class="feat" style="position:relative;z-index:1">
         <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Instant replies, 24 hours a day">Instant replies, 24 hours a day</span></li>
         <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Captures name, phone and what they need">Captures name, phone and what they need</span></li>
-        <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Sends prices, location, photos and catalogs">Sends prices, location, photos and catalogs</span></li>
+        <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Answers prices, hours and common questions">Answers prices, hours and common questions</span></li>
         <li class="feat-i"><span class="feat-arrow">→</span><span data-i18n="Automatic confirmations and reminders">Automatic confirmations and reminders</span></li>
       </ul>
     </article>
@@ -591,9 +598,9 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
     <h2 class="stitle" data-i18n="From zero to your AI receptionist the same day.">From zero to your AI receptionist the same day.</h2>
     <p class="ssub" data-i18n="steps-sub">No code, no hassle, 100% bilingual. Three steps and your business never loses a customer again.</p>
     <div class="steps" data-stagger>
-      <div class="card" style="padding:30px"><div class="step-n">01</div><h3 class="step-t" data-i18n="We talk with you">We talk with you</h3><p class="step-d" data-i18n="step1-desc">30 minutes by phone or text. We learn your business, services, hours, and way of speaking.</p><span class="step-b" data-i18n="Day 1 · 30 min">Day 1 · 30 min</span></div>
-      <div class="card" style="padding:30px"><div class="step-n">02</div><h3 class="step-t" data-i18n="We train your AI">We train your AI</h3><p class="step-d" data-i18n="step2-desc">We set up VoiceCore and ChatCore with your brand, prices, and calendar. We connect your phone line, text messages, and Google.</p><span class="step-b" data-i18n="Day 1–2 · hands-off">Day 1–2 · hands-off</span></div>
-      <div class="card" style="padding:30px"><div class="step-n">03</div><h3 class="step-t" data-i18n="You launch and relax">You launch and relax</h3><p class="step-d" data-i18n="step3-desc">Live tests, we show you the dashboard, and by day 3 your AI receptionist is answering every call and message.</p><span class="step-b" data-i18n="Day 3 · live">Day 3 · live</span></div>
+      <div class="card" style="padding:30px"><div class="step-n">01</div><h3 class="step-t" data-i18n="We talk with you">We talk with you</h3><p class="step-d" data-i18n="step1-desc">30 minutes in person at your business (or by phone). We learn your services, hours, and way of speaking.</p><span class="step-b" data-i18n="Visit · 30 min">Visit · 30 min</span></div>
+      <div class="card" style="padding:30px"><div class="step-n">02</div><h3 class="step-t" data-i18n="We train your AI">We train your AI</h3><p class="step-d" data-i18n="step2-desc">We set up VoiceCore and ChatCore with your brand, prices, and calendar. We connect your phone line, text messages, and Google.</p><span class="step-b" data-i18n="Setup · hands-off">Setup · hands-off</span></div>
+      <div class="card" style="padding:30px"><div class="step-n">03</div><h3 class="step-t" data-i18n="You launch and relax">You launch and relax</h3><p class="step-d" data-i18n="step3-desc">Live tests, we show you the dashboard, and that same day your AI receptionist is answering every call and message.</p><span class="step-b" data-i18n="Live · same day">Live · same day</span></div>
     </div>
   </div>
 </section>
@@ -721,7 +728,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
         <a href="tel:+16123244413" class="btn btn-o" style="display:inline-flex;align-items:center;gap:8px"><svg width="17" height="17" viewBox="0 0 24 24" fill="#22D3EE"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg><span data-i18n="Call 612-324-4413">Call 612-324-4413</span></a>
       </div>
       <p class="ct-trust">
-        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg><span data-i18n="Free setup">Free setup</span></span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg><span data-i18n="Installed in person">Installed in person</span></span>
         <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg><span data-i18n="Bilingual">Bilingual</span></span>
         <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg><span data-i18n="Cancel anytime">Cancel anytime</span></span>
       </p>
@@ -804,8 +811,9 @@ var LANG = 'en';
 var DICT = {
   'Products':'Productos','Services':'Servicios','How it works':'Cómo funciona','Pricing':'Precios',
   'Contact':'Contactar','Client Access':'Acceso Clientes','See live demo':'Ver demo en vivo',
+  'Call Sofia now — 612-324-4413':'Llámala ahora — 612-324-4413',
   'Set up same day':'Configurado el mismo día','Bilingual':'Bilingüe','Personalized support':'Soporte personalizado',
-  'Always available':'Siempre disponible','Response time':'Tiempo de respuesta','More appointments booked':'Más citas agendadas',
+  'Always available':'Siempre disponible','Response time':'Tiempo de respuesta','Same day':'Mismo día','Installed in person':'Instalado en persona',
   'Three engines. A business that never sleeps.':'Tres motores. Un negocio que nunca duerme.',
   'They work together, speak two languages, and book straight into your calendar.':'Trabajan juntos, hablan dos idiomas y agendan directamente en tu calendario.',
   'Product 01 — Personal assistant':'Producto 01 — Asistente personal','Product 02 — Phone':'Producto 02 — Teléfono',
@@ -815,7 +823,7 @@ var DICT = {
   'echo-desc':'Tu asistente personal con AI. Da su número en lugar del tuyo: contesta cada llamada 24/7 en español e inglés, bloquea spam, agenda citas y solo te pasa las llamadas que de verdad importan.',
   'voice-desc':'La recepcionista de la línea de tu negocio. Contesta cada llamada en menos de 2 segundos con voz natural — para que ningún cliente caiga al buzón de voz.',
   'chat-desc':'El asistente de tu sitio web y tus mensajes. Responde en segundos, contesta dudas, capta el lead y confirma la cita — de día o de noche.',
-  'hero-desc':'AlphaCore Solutions es una empresa de tecnología en Minnesota, especializada en agentes de inteligencia artificial que contestan llamadas, responden mensajes de texto y agendan citas — en inglés y en español, 24/7. Tu negocio no descansa, para que tú no vuelvas a perder un cliente.',
+  'hero-desc':'AlphaCore Solutions instala asistentes virtuales con IA que contestan llamadas, responden mensajes de texto y agendan citas — en inglés y en español, 24/7. Instalado en persona el mismo día en Minneapolis, para que tu negocio no vuelva a perder un cliente.',
   'Your AI receptionist and personal assistant that':'Tu recepcionista y asistente personal con IA que',
   'Answers 24/7 so you never miss a lead':'Contesta 24/7 para que no pierdas ni un cliente',
   'Blocks spam and robocalls automatically':'Bloquea spam y robocalls automáticamente',
@@ -824,12 +832,12 @@ var DICT = {
   'Transfers urgent calls to your phone':'Te transfiere las llamadas urgentes',
   'Keeps your personal number private':'Mantiene privado tu número personal',
   'Natural voice in English and Spanish':'Voz natural en español e inglés',
-  'Books, reschedules and cancels appointments':'Agenda, reagenda y cancela citas',
+  'Books appointments in your Google Calendar':'Agenda citas en tu Google Calendar',
   'Takes messages and transfers calls':'Toma mensajes y transfiere llamadas',
-  'Sends you a transcript by SMS':'Te envía la transcripción por SMS',
+  'Texts you who called and why, mid-call — full transcript in your portal':'Te avisa por texto quién llama y para qué, a media llamada — transcripción completa en tu portal',
   'Instant replies, 24 hours a day':'Respuestas al instante, 24 horas al día',
   'Captures name, phone and what they need':'Capta nombre, teléfono y lo que necesitan',
-  'Sends prices, location, photos and catalogs':'Envía precios, ubicación, fotos y catálogos',
+  'Answers prices, hours and common questions':'Responde precios, horarios y preguntas frecuentes',
   'Automatic confirmations and reminders':'Confirmaciones y recordatorios automáticos',
   'Salespeople':'Vendedores','Contractors':'Contratistas','Real-estate agents':'Agentes inmobiliarios','Solo founders':'Emprendedores',
   'Blocked':'Bloqueado','Blocked · spam':'Bloqueado · spam','Connecting':'Te lo paso','Booked':'Agendada',
@@ -850,10 +858,10 @@ var DICT = {
   'From zero to your AI receptionist the same day.':'De cero a tu recepcionista AI el mismo día.',
   'steps-sub':'Sin código, sin complicaciones, 100% bilingüe. Tres pasos y tu negocio ya nunca pierde un cliente.',
   'We talk with you':'Hablamos contigo','We train your AI':'Entrenamos a tu AI','You launch and relax':'Lanzas y descansas',
-  'step1-desc':'30 minutos por teléfono o mensaje de texto. Entendemos tu negocio, tus servicios, tus horarios, tu forma de hablar.',
+  'step1-desc':'30 minutos en persona en tu negocio (o por teléfono). Entendemos tus servicios, tus horarios, tu forma de hablar.',
   'step2-desc':'Configuramos VoiceCore y ChatCore con tu marca, tus precios y tu calendario. Conectamos tu línea, tus mensajes de texto y Google.',
-  'step3-desc':'Pruebas en vivo, te enseñamos el panel y al día 3 tu recepcionista AI está respondiendo cada llamada y cada mensaje.',
-  'Day 1 · 30 min':'Día 1 · 30 min','Day 1–2 · hands-off':'Día 1–2 · sin tocar nada','Day 3 · live':'Día 3 · en vivo',
+  'step3-desc':'Pruebas en vivo, te enseñamos el panel y ese mismo día tu recepcionista AI está respondiendo cada llamada y cada mensaje.',
+  'Visit · 30 min':'Visita · 30 min','Setup · hands-off':'Configuración · sin tocar nada','Live · same day':'En vivo · el mismo día',
   'A plan for every stage of your business.':'Un plan para cada etapa de tu negocio.',
   'price-sub':'Empieza pequeño, escala cuando quieras. Bilingüe, sin sorpresas. Cancela cuando gustes.',
   'Monthly':'Mensual','Annual':'Anual',
@@ -896,7 +904,7 @@ var DICT = {
   'Still have questions? These are the ones we hear most.':'¿Aún tienes dudas? Esto es lo que más nos preguntan.',
   'Your next customer is calling right now.':'Tu próximo cliente está llamando ahora mismo.',
   'cta-desc':'No le hagas esperar al buzón de voz. El mismo día tu negocio puede tener una recepcionista bilingüe que nunca duerme.',
-  'Call 612-324-4413':'Llamar 612-324-4413','Free setup':'Configuración gratis','Cancel anytime':'Cancela cuando quieras',
+  'Call 612-324-4413':'Llamar 612-324-4413','Cancel anytime':'Cancela cuando quieras',
   'Our Services':'Nuestros Servicios',
   'foot-brand':'AI automation studio para todos los negocios. Hecho en Minneapolis, MN — para el resto del país.',
   'Product':'Producto','Company':'Empresa',
@@ -950,7 +958,7 @@ var FAQS_EN = [
   ['Do I need to change my phone number?','No. We set up call forwarding from your current number to VoiceCore, without you changing anything. If you prefer, we can also give you a new dedicated number.'],
   ['What happens if the AI doesn\'t know how to answer something?','The AI is trained to recognize when it needs human help. In those cases it sends you the conversation by SMS immediately, or transfers the call to your cell phone, whichever you prefer.'],
   ['Is there a long-term contract?','No. You pay month to month and can cancel anytime with 30 days\' notice. We believe the product should earn your trust every month.'],
-  ['What tools does it integrate with?','Google Calendar, Google Workspace, Stripe, Square, HubSpot, Mailchimp, Zapier, and more. If you use something not listed, the Business plan includes custom integrations.']
+  ['What tools does it integrate with?','Google Calendar, Square and Stripe. If you use something not listed, the Business plan includes custom integrations.']
 ];
 var FAQS_ES = [
   ['¿Cuánto tarda en estar funcionando?','El mismo día en la mayoría de los casos. Tenemos una llamada inicial de 30 minutos contigo, entrenamos tu asistente con la información de tu negocio, y ese mismo día está contestando llamadas y mensajes.'],
@@ -958,7 +966,7 @@ var FAQS_ES = [
   ['¿Necesito cambiar mi número de teléfono?','No. Configuramos un desvío de llamadas desde tu número actual hacia VoiceCore, sin que tengas que cambiar nada. Si prefieres, también podemos darte un número nuevo dedicado.'],
   ['¿Qué pasa si la AI no sabe responder algo?','La AI está entrenada para reconocer cuándo necesita ayuda humana. En esos casos te envía la conversación por SMS inmediatamente, o transfiere la llamada a tu celular según prefieras.'],
   ['¿Hay contrato a largo plazo?','No. Pagas mes a mes y puedes cancelar cuando quieras con 30 días de aviso. Creemos que el producto se debe ganar tu confianza cada mes.'],
-  ['¿Con qué herramientas se integra?','Google Calendar, Google Workspace, Stripe, Square, HubSpot, Mailchimp, Zapier y más. Si usas algo que no está listado, en el plan Business hacemos integraciones a la medida.']
+  ['¿Con qué herramientas se integra?','Google Calendar, Square y Stripe. Si usas algo que no está listado, en el plan Business hacemos integraciones a la medida.']
 ];
 var faqOpenIdx = -1;
 function buildFaq(){
