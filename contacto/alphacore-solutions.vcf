@@ -1,10 +1,14 @@
 BEGIN:VCARD
 VERSION:3.0
-FN:AlphaCore Solutions
-ORG:AlphaCore Solutions
+N:Quintana;Axel;;;
+FN:Axel Quintana — AlphaCore Solutions
+ORG:AlphaCore Solutions LLC
+TITLE:AI Automation Studio
+TEL;TYPE=CELL,VOICE:+16126821040
 TEL;TYPE=WORK,VOICE:+16123244413
-TEL;TYPE=ASSISTANT,VOICE:+16126821040
-EMAIL;TYPE=WORK:info@alphacoresolutions.co
+EMAIL;TYPE=INTERNET,WORK:info@alphacoresolutions.co
 URL:https://alphacoresolutions.co/
-ADR;TYPE=WORK:;;Minneapolis;MN;;;USA
+ADR;TYPE=WORK:;;;Minneapolis;MN;;United States
+NOTE:AI phone and text assistants for local businesses. 24/7 bilingual (EN/ES). Live demo: call Sofia at 612-324-4413.
+REV:2026-09-11T00:00:00Z
 END:VCARD
