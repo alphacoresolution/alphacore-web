@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:AlphaCore Solutions
+ORG:AlphaCore Solutions
+TEL;TYPE=WORK,VOICE:+16123244413
+TEL;TYPE=ASSISTANT,VOICE:+16126821040
+EMAIL;TYPE=WORK:info@alphacoresolutions.co
+URL:https://alphacoresolutions.co/
+ADR;TYPE=WORK:;;Minneapolis;MN;;;USA
+END:VCARD
