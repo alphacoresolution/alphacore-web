@@ -159,7 +159,7 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:#67E8F9}ul{list-style:non
 .hero-ctas{display:flex;flex-wrap:wrap;gap:13px}
 .hero-trust{display:flex;flex-wrap:wrap;gap:12px 26px;margin-top:30px}
 /* Barra fija de llamada — SOLO movil (CTA #1: la demo en vivo). right:110px deja libre la esquina
-   donde el widget de ChatCore (widget.js) pone la mascota "cubo" (88px, right/bottom 12px). El padding-bottom del body evita que tape el footer. */
+   donde el widget de ChatCore (widget.js) pone la mascota Sofia (/mascota-sofia.png, 88px, right/bottom 12px). El padding-bottom del body evita que tape el footer. */
 .mob-call{display:none}
 @media(max-width:768px){.mob-call{display:flex;position:fixed;left:12px;right:110px;bottom:12px;z-index:60;align-items:center;justify-content:center;gap:8px;padding:14px 10px;border-radius:14px;background:var(--cyan5);color:var(--bg);font-weight:700;font-size:14px;white-space:nowrap;box-shadow:0 10px 34px rgba(6,182,212,.35)}.mob-call svg{flex-shrink:0}body{padding-bottom:80px}}
 .hero-trust span{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--text4)}
@@ -2002,9 +2002,9 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matc
 </script>
 <!-- ChatCore en vivo: la mejor demo es usarlo. El numero identifica al
      negocio (el de AlphaCore mismo) — la burbujita ES el producto. -->
-<script src="https://chatcore-production-7184.up.railway.app/widget.js?v=9"
+<script src="https://chatcore-production-7184.up.railway.app/widget.js?v=10"
         data-chatcore="+16123244413" data-title="AlphaCore · Asistente"
         data-title-en="AlphaCore · Assistant"
-        data-mascota="cubo" defer></script>
+        data-mascota="imagen" data-mascota-src="/mascota-sofia.png" defer></script>
 </body>
 </html>
